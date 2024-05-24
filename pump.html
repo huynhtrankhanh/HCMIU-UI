@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pump Control</title>
+</head>
+<body>
+    <h1>Pump Control</h1>
+    <div>
+        <label for="pumpNumber">Pump Number (1-2):</label>
+        <input type="number" id="pumpNumber" min="1" max="2">
+    </div>
+    <div>
+        <label for="intensity">Intensity (0-255):</label>
+        <input type="number" id="intensity" min="0" max="255">
+    </div>
+    <button id="connectButton">Connect</button>
+    <button id="sendButton">Send Command</button>
+    <pre id="output"></pre>
+
+    <script>
+        const motorPins = {
+            1: { digital1: 2, digital2: 4, pwm: 3 },
+            2: { digital1: 6, digital2: 7, pwm: 5 },
+        };
+
+        let port;
+        let writer;
+
+        document.getElementById('connectButton').addEventListener('click', async () => {
+            try {
+                port = await navigator.serial.requestPort();
+                await port.open({ baudRate: 9600 });
+                writer = port.writable.getWriter();
+                document.getElementById('output').textContent = 'Connected to serial port.\n';
+            } catch (error) {
+                document.getElementById('output').textContent = `Error: ${error}\n`;
+            }
+        });
+
+        document.getElementById('sendButton').addEventListener('click', async () => {
+            const pumpNumber = parseInt(document.getElementById('pumpNumber').value);
+            const intensity = parseInt(document.getElementById('intensity').value);
+
+            if (!motorPins[pumpNumber]) {
+                document.getElementById('output').textContent += `Invalid pump number '${pumpNumber}'. Must be between 1 and 2.\n`;
+                return;
+            }
+
+            if (intensity < 0 || intensity > 255) {
+                document.getElementById('output').textContent += 'Invalid intensity. Must be between 0 and 255.\n';
+                return;
+            }
+
+            try {
+                await sendCommand(0, motorPins[pumpNumber].digital1, 0);
+                await sendCommand(0, motorPins[pumpNumber].digital2, 1);
+                await sendCommand(1, motorPins[pumpNumber].pwm, intensity);
+                document.getElementById('output').textContent += 'Command sent successfully.\n';
+            } catch (error) {
+                document.getElementById('output').textContent += `Error sending command: ${error}\n`;
+            }
+        });
+
+        async function sendCommand(commandType, pin, value) {
+            const data = new Uint8Array([commandType, pin, value]);
+            await writer.write(data);
+        }
+    </script>
+</body>
+</html>
