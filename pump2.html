@@ -21,12 +21,20 @@
         <input type="number" id="intensity2" min="0" max="255">
     </div>
     <div>
-        <label for="startDelay">Start Delay (milisecond):</label>
-        <input type="number" id="startDelay" min="0" max="5000">
+        <label for="startDelay">Start Delay:</label>
+        <input type="number" id="startDelay">
+        <select name="startValueType" id="startValueType">
+            <option value="milisecond">milisecond</option>
+            <option value="second">second</option>
+        </select>
     </div>
     <div>
-        <label for="executionTime">Execution Time (milisecond):</label>
-        <input type="number" id="executionTime" min="0" max="5000">
+        <label for="executionTime">Execution Time:</label>
+        <input type="number" id="executionTime">
+        <select name="executionValueType" id="executionValueType">
+            <option value="milisecond">milisecond</option>
+            <option value="second">second</option>
+        </select>
     </div>
     <button id="connectButton">Connect</button>
     <button id="sendButton">Send Command</button>
@@ -56,9 +64,11 @@
             //const pumpNumber = parseInt(document.getElementById('pumpNumber').value);
             const intensity1 = parseInt(document.getElementById('intensity1').value);
             const intensity2 = parseInt(document.getElementById('intensity2').value);
-            const executionTime = parseInt(document.getElementById('executionTime').value);
-            const startDelay = parseInt(document.getElementById('startDelay').value);
+            const executionTime = await timeconverter(parseInt(document.getElementById('executionTime').value),document.getElementById('executionValueType').value);
+            const startDelay = await timeconverter(parseInt(document.getElementById('startDelay').value),document.getElementById('startValueType').value);
+
             document.getElementById('output').textContent += 'Command sent successfully.\n';
+            document.getElementById('output').textContent += `execution time: ${executionTime}, start Delay: ${startDelay}\n`;
             /*if (!motorPins[pumpNumber]) {
                 document.getElementById('output').textContent += `Invalid pump number '${pumpNumber}'. Must be between 1 and 2.\n`;
                 return;
@@ -103,6 +113,18 @@
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
+
+        function timeconverter(value, type){
+            if (type == "milisecond")
+            return value;
+            else if (type == "second")
+            return value*1000;
+            else {
+                document.getElementById('output').textContent += `Unexpected Error\n`;
+            }
+            return 0
+        }
+
     </script>
 </body>
 </html>
