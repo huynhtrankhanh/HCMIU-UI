@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save Taste</title>
+</head>
+<body>
+    <h1>Save</h1>
+    <div id="SaveDisplay">
+    </div>
+    <div id="NewSave">
+        <p>New Save</p>
+    </div>
+    <div>
+        <input type="button" onclick="location.href='pump2.html'" value="Back">
+        <button id="Savebutton">Save</button>
+    </div>
+    <div id="NewSaveForm" class="popup">
+        <label for="FormName">Name</label>
+        <input type="text" id="FormName" required>
+        <label for="FormDescription">Description</label> <!-- Fixed typo here -->
+        <input type="text" id="FormDescription">
+        <div>
+        <button id="CancelForm">Cancel</button>
+        <button id="SaveForm">Save</button>
+        </div>
+    </div>
+    <pre id="output"></pre>
+    <style>
+        .popup {
+            display: none;
+        }
+    </style>
+    <script>
+        class Save{
+            constructor(Name, Description, Savefile){
+                this.Name=Name
+                this.Description=Description
+                this.Savefile=Savefile
+            }
+        }
+        
+        var selectsave;
+        var SaveList; // Declare SaveList outside the condition to be accessible outside the block
+
+        const TempSave=JSON.parse(sessionStorage.getItem("session"));
+        if(localStorage.getItem("SaveList")==null){
+            SaveList=[]; // Initialize SaveList as an empty array
+        }
+        else{
+            SaveList=JSON.parse(localStorage.getItem("SaveList"));
+        }
+
+        SaveList.forEach(function(SaveElement, Counter) {
+            document.getElementById("SaveDisplay").innerHTML += `<div id="${Counter}" class="SaveElement"><h5>${SaveElement.Name}</h5><p>${SaveElement.Description}</p></div>`
+        });
+
+        document.getElementById("NewSave").addEventListener("click", async()=>{
+            try {
+                selectsave="NewSave";
+            } catch (error) {
+                document.getElementById('output').textContent = `Error: ${error}\n`;
+            }
+        });
+
+        document.body.addEventListener('click', function(event) {
+            if(event.target.classList.contains('SaveElement')) {
+                selectsave=event.target.id; 
+            }
+        });
+
+        document.getElementById("Savebutton").addEventListener("click", ()=>{
+            try {
+                if (selectsave == null){
+                    document.getElementById('output').textContent = `Please select a save`;
+                    return
+                }
+                document.getElementById("NewSaveForm").style.display = "block";
+            } catch (error) {
+                document.getElementById('output').textContent = `Error: ${error}\n`;   
+            }
+        });
+
+        document.getElementById("CancelForm").addEventListener("click", ()=>{
+            document.getElementById("NewSaveForm").style.display = "none";
+            document.getElementById('output').textContent = `Canceled`;
+        });
+
+        document.getElementById("SaveForm").addEventListener("click",()=>{
+            try{
+                document.getElementById("NewSaveForm").style.display = "none";
+                var savename = document.getElementById("FormName").value;
+                var description = "No description"
+                if (document.getElementById("FormDescription").value)
+                description = document.getElementById("FormDescription").value;
+                if (selectsave == "NewSave"){
+                    SaveList.push(new Save(savename, description, TempSave)); 
+                }
+                else{
+                    SaveList[selectsave]=new Save(savename, description, TempSave);
+                }
+                localStorage.setItem("SaveList", JSON.stringify(SaveList)); // Store SaveList in localStorage
+                location.reload();
+            } catch (error) {
+                document.getElementById('output').textContent = `Error: ${error}\n`;   
+            }
+        });
+
+    </script>
+</body>
+</html>

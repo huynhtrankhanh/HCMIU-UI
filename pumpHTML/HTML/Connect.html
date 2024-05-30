@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Connect Device</h1>
+    <button id="connectButton">Connect device</button>
+    <button id="sendButton">Send Command</button>
+    <pre id="output"></pre>
+
+    <script>
+        const motorPins = {
+            1: { digital1: 2, digital2: 4, pwm: 3 },
+            2: { digital1: 6, digital2: 7, pwm: 5 },
+        };
+
+        let port;
+        let writer;
+
+        document.getElementById('connectButton').addEventListener('click', async () => {
+            try {
+                port = await navigator.serial.requestPort();
+                await port.open({ baudRate: 9600 });
+                writer = port.writable.getWriter();
+                document.getElementById('output').textContent = 'Connected to serial port.\n';
+            } catch (error) {
+                document.getElementById('output').textContent = `Error: ${error}\n`;
+            }
+        });
+
+        document.getElementById('sendButton').addEventListener('click', () => {
+            segments.forEach(Segment, async() => {
+                
+                await sleep(timeconverter(Segment.startDelay,Segment.startValueType));
+                intensityChange(1, Segment.intensity1);
+                intensityChange(2, Segment.intensity2);
+                await sleep(timeconverter(Segment.executionTime,Segment.executionValueType));
+                intensityChange(1, 0);
+                intensityChange(2, 0);
+            });
+        });
+
+        async function intensityChange(pumpnumber, intensity){
+            try {
+                await sendCommand(0, motorPins[pumpnumber].digital1, 0);
+                await sendCommand(0, motorPins[pumpnumber].digital2, 1);
+                await sendCommand(1, motorPins[pumpnumber].pwm, intensity);
+                document.getElementById('output').textContent += `Pump ${pumpnumber} sent successfully.\n`;
+            } catch (error) {
+                document.getElementById('output').textContent += `Error sending command: ${error}\n`;
+            }
+            return
+        }
+
+        async function sendCommand(commandType, pin, value) {
+            const data = new Uint8Array([commandType, pin, value]);
+            await writer.write(data);
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function timeconverter(value, type){
+            if (type == 0)
+            return value;
+            else if (type == 1)
+            return value*1000;
+            else {
+                document.getElementById('output').textContent += `Unexpected Error\n`;
+            }
+            return 0
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export File</title>
+</head>
+<body>
+    <h1>Export File</h1>
+    <div id="SaveDisplay">
+    </div>
+    <div>
+        <input type="button" onclick="location.href='Menu.html'" value="Back">
+        <button id="Exportbutton">Export</button>
+    </div>
+    <pre id="output"></pre>
+
+    <script>
+        var SaveList;
+        var selectsave;
+        if(localStorage.getItem("SaveList")==null){
+            SaveList=[]; // Initialize SaveList as an empty array
+        }
+        else{
+            SaveList=JSON.parse(localStorage.getItem("SaveList"));
+        }
+
+        SaveList.forEach(function(SaveElement, Counter) {
+            document.getElementById("SaveDisplay").innerHTML += `<div id="${Counter}" class="SaveElement"><h5>${SaveElement.Name}</h5><p>${SaveElement.Description}</p></div>`
+        });
+
+        document.body.addEventListener('click', function(event) {
+            if(event.target.classList.contains('SaveElement')) {
+                selectsave=event.target.id; 
+            }
+        });
+
+        document.getElementById("Exportbutton").addEventListener('click', ()=>{
+            try {
+                if (selectsave == null){
+                    document.getElementById('output').textContent = `Please select a save`;
+                    return
+                }
+                const a = document.createElement("a");
+                const file = new Blob([JSON.stringify(SaveList[selectsave])], { type: "application/json" });
+                a.href = URL.createObjectURL(file);
+                a.download = (SaveList[selectsave].Name);
+                a.click();
+            } catch (error) {
+                document.getElementById('output').textContent = `Error: ${error}\n`;   
+            }
+        })
+    </script>
+</body>
+</html>

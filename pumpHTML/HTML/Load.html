@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load</title>
+</head>
+<body>
+    <h1>Load</h1>
+    <div id="SaveDisplay">
+    </div>
+    <div>
+        <input type="button" onclick="if(localStorage.getItem('back')==1)location.href='pump2.html';else location.href='Menu.html';" value="Back">
+        <button id="Loadbutton">Load</button>
+        <button id="Deletebutton">Delete</button>
+    </div>
+    <pre id="output"></pre>
+
+    <script>
+        var SaveList;
+        var selectsave;
+        if(localStorage.getItem("SaveList")==null){
+            SaveList=[]; // Initialize SaveList as an empty array
+        }
+        else{
+            SaveList=JSON.parse(localStorage.getItem("SaveList"));
+        }
+
+        SaveList.forEach(function(SaveElement, Counter) {
+            document.getElementById("SaveDisplay").innerHTML += `<div id="${Counter}" class="SaveElement"><h5>${SaveElement.Name}</h5><p>${SaveElement.Description}</p></div>`
+        });
+
+        document.body.addEventListener('click', function(event) {
+            if(event.target.classList.contains('SaveElement')) {
+                selectsave=event.target.id; 
+            }
+        });
+
+        document.getElementById("Loadbutton").addEventListener('click', ()=>{
+            try {
+                if (selectsave == null){
+                    document.getElementById('output').textContent = `Please select a save`;
+                    return
+                }
+                sessionStorage.setItem('session',JSON.stringify(SaveList[selectsave].Savefile));
+                location.href='pump2.html';
+            } catch (error) {
+                document.getElementById('output').textContent = `Error: ${error}\n`;   
+            }
+        })
+
+        document.getElementById("Deletebutton").addEventListener('click',()=>{
+            try {
+                if (selectsave == null){
+                    document.getElementById('output').textContent = `Please select a save`;
+                    return
+                }
+                SaveList.splice(selectsave,1);
+                localStorage.setItem("SaveList",JSON.stringify(SaveList));
+                location.reload();
+            } catch (error) {
+                document.getElementById('output').textContent = `Error: ${error}\n`;   
+            }
+        })
+    </script>
+</body>
+</html>

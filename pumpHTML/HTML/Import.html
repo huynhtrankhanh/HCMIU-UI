@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import File</title>
+</head>
+<body>
+    <h1>Import</h1>
+    <input type="file" onchange="previewFile()" /><br />
+    <input type="button" onclick="location.href='Menu.html'" value="Back">
+    <pre id="output"></pre>
+    
+    <script>
+        var SaveList;
+        if(localStorage.getItem("SaveList")==null){
+            SaveList=[]; // Initialize SaveList as an empty array
+        }
+        else{
+            SaveList=JSON.parse(localStorage.getItem("SaveList"));
+        }
+
+        class Save{
+            constructor(Name, Description, Savefile){
+                this.Name=Name
+                this.Description=Description
+                this.Savefile=Savefile
+            }
+        }
+
+        function previewFile() {
+            const [file] = document.querySelector("input[type=file]").files;
+            const reader = new FileReader();
+
+            reader.addEventListener("load",() => { 
+                const importsave = JSON.parse(reader.result);
+                if (compareKeys(importsave,Check)){
+                    SaveList.push(importsave);
+                    localStorage.setItem("SaveList", JSON.stringify(SaveList));
+                    localStorage.setItem('back',0);
+                    location.href='Load.html'
+                }
+            },false,document.getElementById('output').textContent = `This is not a Gustatory Save`);
+
+            if (file) {
+                reader.readAsText(file);
+            }
+        }
+
+        Check = new Save("TestName","TestDesc","TestSave");
+        
+        function compareKeys(a, b) {
+            var aKeys = Object.keys(a).sort();
+            var bKeys = Object.keys(b).sort();
+            return JSON.stringify(aKeys) === JSON.stringify(bKeys);
+        }
+
+    </script>
+</body>
+</html>
