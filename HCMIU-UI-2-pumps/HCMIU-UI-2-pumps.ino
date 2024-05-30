@@ -10,6 +10,8 @@ void setup() {
   for (int pin = firstPin; pin <= lastPin; pin++) {
     pinMode(pin, OUTPUT);
   }
+
+  Serial.print("GUSTATORY 2 PUMPS");
 }
 
 void loop() {
