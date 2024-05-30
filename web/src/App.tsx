@@ -20,7 +20,7 @@ export default function App() {
     return (
         <div className="p-4">
             {!twoPumpController || !fourPumpController ? (
-                <DeviceConnectionScreen onConnect={handleConnect} />
+                <DeviceConnectionScreen onConnect={handleConnect} connectedCount={Number(twoPumpController !== null) + Number(fourPumpController !== null)} />
             ) : (
                 <TasteProfileScreen 
                     twoPumpController={twoPumpController} 
