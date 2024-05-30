@@ -68,36 +68,38 @@ export const TasteProfileScreen: React.FC<TasteProfileScreenProps> = ({ twoPumpC
     };
 
     return (
-        <div className="space-y-4">
-            <h1 className="text-xl font-bold">Configure Taste Profile</h1>
+        <div className="max-w-lg mx-auto p-8 bg-white shadow-lg rounded-lg space-y-6">
+            <h1 className="text-2xl font-bold text-center">Configure Taste Profile</h1>
             {Object.keys(profile).map(key => (
-                <div key={key} className="flex items-center space-x-2">
-                    <label className="w-32">{key}</label>
+                <div key={key} className="flex items-center space-x-4">
+                    <label className="w-32 capitalize font-medium">{key}</label>
                     <input 
                         type="number" 
                         value={profile[key as keyof TasteProfile]} 
                         onChange={e => updateProfile(key as keyof TasteProfile, Number(e.target.value))} 
-                        className="border border-gray-300 rounded px-2 py-1"
+                        className="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
                         min="0" 
                         max="255"
                     />
                 </div>
             ))}
-            <div className="flex space-x-4">
+            <div className="flex justify-between space-x-4">
                 <button 
-                    className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                    className="flex-1 px-4 py-2 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-600 transition duration-300"
                     onClick={startPumping}
                 >
                     Start
                 </button>
                 <button 
-                    className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                    className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-600 transition duration-300"
                     onClick={stopPumping}
                 >
                     Stop
                 </button>
+            </div>
+            <div className="flex justify-between space-x-4">
                 <button 
-                    className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+                    className="flex-1 px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-lg hover:bg-yellow-600 transition duration-300"
                     onClick={saveProfile}
                 >
                     Save Profile
@@ -109,7 +111,7 @@ export const TasteProfileScreen: React.FC<TasteProfileScreenProps> = ({ twoPumpC
                     className="hidden" 
                     id="file-upload"
                 />
-                <label htmlFor="file-upload" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer">
+                <label htmlFor="file-upload" className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition duration-300 cursor-pointer text-center">
                     Load Profile
                 </label>
             </div>
