@@ -1,205 +1,252 @@
-Here's the complete React + Tailwind code to achieve the functionality described. The code will have two main screens: the CONNECTION SCREEN and the CONFIGURE TASTE PROFILE screen. 
+Sure, I'll help you modify the `PumpController` class to differentiate between a 2-pump and a 4-pump device upon connection. I'll then provide the React + Tailwind application that meets your requirements.
 
-1. **ConnectionScreen Component**: Allows the user to connect to two devices, a 2-pump device, and a 4-pump device.
-2. **TasteProfileScreen Component**: Lets the user configure the taste profile, save it as a JSON file, load an existing JSON file, and start or stop the pumps.
+### PumpController Modifications
+First, we need to modify the `PumpController` class to include a method that returns the type of pump configuration directly from the connected device. 
 
-### App.js
-This file manages the state and handles the logic to switch between the connection screen and the taste profile screen.
+#### PumpController.ts
+Let's add a getter `isTwoPump` that determines if the device is a 2-pump type:
 
-```javascript
+```typescript
+export class PumpController {
+    private motorPins: { [key: number]: MotorPins };
+    private port: SerialPort | null = null;
+    private writer: WritableStreamDefaultWriter | null = null;
+    private reader: ReadableStreamDefaultReader<Uint8Array> | null = null;
+    private type: '2-pump' | '4-pump' | null = null;
+
+    constructor() {
+        this.motorPins = {};
+    }
+
+    async connect(): Promise<void> {
+        try {
+            this.port = await navigator.serial.requestPort();
+            await this.port.open({ baudRate: 9600 });
+
+            this.writer = this.port.writable.getWriter();
+            this.reader = this.port.readable.getReader();
+
+            const initialMessage = await this.readInitialMessage();
+
+            if (initialMessage === "GUSTATORY 2 PUMPS") {
+                this.motorPins = twoPumpConfig;
+                this.type = '2-pump';
+            } else if (initialMessage === "GUSTATORY 4 PUMPS") {
+                this.motorPins = fourPumpConfig;
+                this.type = '4-pump';
+            } else {
+                throw new Error("Unknown device configuration");
+            }
+            console.log('Connected to device. Configuration:', initialMessage);
+        } catch (error) {
+            console.error('Connection error:', error);
+        }
+    }
+
+    get isTwoPump(): boolean | null {
+        return this.type === '2-pump';
+    }
+
+    // ... (other methods remain unchanged)
+}
+```
+
+### React + Tailwind Application
+Next, we create a React application with the following components:
+
+1. **Connection Screen**: To enable the user to connect two devices.
+2. **Taste Profile Configuration**: Where the user configures and saves or loads taste profiles.
+
+#### App.tsx (Main File)
+```tsx
 import React, { useState } from 'react';
-import ConnectionScreen from './components/ConnectionScreen';
-import TasteProfileScreen from './components/TasteProfileScreen';
+import { PumpController } from './PumpController';
+import { DeviceConnectionScreen } from './DeviceConnectionScreen';
+import { TasteProfileScreen } from './TasteProfileScreen';
+
+export default function App() {
+    const [twoPumpController, setTwoPumpController] = useState<PumpController | null>(null);
+    const [fourPumpController, setFourPumpController] = useState<PumpController | null>(null);
+
+    const handleConnect = (controller: PumpController) => {
+        if (controller.isTwoPump === true) {
+            setTwoPumpController(controller);
+        } else if (controller.isTwoPump === false) {
+            setFourPumpController(controller);
+        } else {
+            console.error('Unable to determine pump configuration.');
+        }
+    };
+
+    return (
+        <div className="p-4">
+            {!twoPumpController || !fourPumpController ? (
+                <DeviceConnectionScreen onConnect={handleConnect} />
+            ) : (
+                <TasteProfileScreen 
+                    twoPumpController={twoPumpController} 
+                    fourPumpController={fourPumpController} 
+                />
+            )}
+        </div>
+    );
+}
+```
+
+#### DeviceConnectionScreen.tsx
+```tsx
+import React from 'react';
 import { PumpController } from './PumpController';
 
-const App = () => {
-  const [twoPumpDevice, setTwoPumpDevice] = useState(null);
-  const [fourPumpDevice, setFourPumpDevice] = useState(null);
-
-  const handleDevicesConnected = (twoPump, fourPump) => {
-    setTwoPumpDevice(twoPump);
-    setFourPumpDevice(fourPump);
-  };
-
-  if (!twoPumpDevice || !fourPumpDevice) {
-    return <ConnectionScreen onDevicesConnected={handleDevicesConnected} />;
-  }
-
-  return (
-    <TasteProfileScreen twoPumpDevice={twoPumpDevice} fourPumpDevice={fourPumpDevice} />
-  );
+type DeviceConnectionScreenProps = {
+    onConnect: (controller: PumpController) => void;
 };
 
-export default App;
-```
-
-### ConnectionScreen Component
-This component handles the connection to the devices.
-
-```javascript
-import React from 'react';
-import { PumpController } from '../PumpController';
-
-const ConnectionScreen = ({ onDevicesConnected }) => {
-  const connectToDevice = async (pumpCount) => {
-    const pumpController = new PumpController();
-    await pumpController.connect();
-
-    if ((pumpCount === 2 && Object.keys(pumpController.motorPins).length === 2) ||
-        (pumpCount === 4 && Object.keys(pumpController.motorPins).length === 4)) {
-      return pumpController;
-    } else {
-      throw new Error(`Failed to connect to ${pumpCount}-pump device`);
-    }
-  };
-
-  const connectDevices = async () => {
-    try {
-      const twoPumpDevice = await connectToDevice(2);
-      const fourPumpDevice = await connectToDevice(4);
-      onDevicesConnected(twoPumpDevice, fourPumpDevice);
-    } catch (error) {
-      console.error('Error connecting devices:', error);
-    }
-  };
-
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={connectDevices}>
-        Connect Devices
-      </button>
-    </div>
-  );
-};
-
-export default ConnectionScreen;
-```
-
-### TasteProfileScreen Component
-This component handles the taste profile configuration, saving/loading JSON files, and starting/stopping the pumps.
-
-```javascript
-import React, { useState } from 'react';
-
-const TasteProfileScreen = ({ twoPumpDevice, fourPumpDevice }) => {
-  const [tasteProfile, setTasteProfile] = useState({
-    bitter: 0,
-    water: 0,
-    sweet: 0,
-    salty: 0,
-    umami: 0,
-    sour: 0,
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setTasteProfile(prevState => ({ ...prevState, [name]: parseInt(value) }));
-  };
-
-  const saveProfile = () => {
-    const json = JSON.stringify(tasteProfile, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'tasteProfile.json';
-    a.click();
-  };
-
-  const loadProfile = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const loadedProfile = JSON.parse(event.target.result);
-      setTasteProfile(loadedProfile);
-    };
-    reader.readAsText(file);
-  };
-
-  const startPumping = async () => {
-    const pumpMap = {
-      bitter: { device: twoPumpDevice, pump: 1 },
-      water: { device: twoPumpDevice, pump: 2 },
-      sweet: { device: fourPumpDevice, pump: 1 },
-      salty: { device: fourPumpDevice, pump: 2 },
-      umami: { device: fourPumpDevice, pump: 3 },
-      sour: { device: fourPumpDevice, pump: 4 },
+export const DeviceConnectionScreen: React.FC<DeviceConnectionScreenProps> = ({ onConnect }) => {
+    const connectDevice = async () => {
+        const controller = new PumpController();
+        await controller.connect();
+        onConnect(controller);
     };
 
-    for (const [taste, { device, pump }] of Object.entries(pumpMap)) {
-      await device.pump(pump, tasteProfile[taste]);
-    }
-  };
-
-  const stopPumping = async () => {
-    // Example: setting all intensities to 0 to stop pumps
-    await startPumping({ bitter: 0, water: 0, sweet: 0, salty: 0, umami: 0, sour: 0 });
-  };
-
-  return (
-    <div className="flex flex-col items-center min-h-screen bg-gray-100 p-4">
-      {Object.keys(tasteProfile).map(taste => (
-        <div key={taste} className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">{taste}</label>
-          <input
-            type="number"
-            name={taste}
-            value={tasteProfile[taste]}
-            min="0"
-            max="255"
-            onChange={handleInputChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
+    return (
+        <div className="flex flex-col items-center justify-center h-screen space-y-4">
+            <h1 className="text-xl font-bold">Connect Devices</h1>
+            <button 
+                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                onClick={connectDevice}
+            >
+                Connect Device
+            </button>
         </div>
-      ))}
+    );
+};
+```
 
-      <div className="flex space-x-4">
-        <button
-          className="bg-green-500 text-white px-4 py-2 rounded"
-          onClick={startPumping}
-        >
-          Start
-        </button>
+#### TasteProfileScreen.tsx
+```tsx
+import React, { useState } from 'react';
+import { PumpController } from './PumpController';
 
-        <button
-          className="bg-red-500 text-white px-4 py-2 rounded"
-          onClick={stopPumping}
-        >
-          Stop
-        </button>
-
-        <button
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-          onClick={saveProfile}
-        >
-          Save Profile
-        </button>
-
-        <label className="bg-indigo-500 text-white px-4 py-2 rounded cursor-pointer">
-          Load Profile
-          <input type="file" accept="application/json" onChange={loadProfile} className="hidden" />
-        </label>
-      </div>
-    </div>
-  );
+type TasteProfile = {
+    bitter: number;
+    water: number;
+    sweet: number;
+    salty: number;
+    umami: number;
+    sour: number;
 };
 
-export default TasteProfileScreen;
+type TasteProfileScreenProps = {
+    twoPumpController: PumpController;
+    fourPumpController: PumpController;
+};
+
+export const TasteProfileScreen: React.FC<TasteProfileScreenProps> = ({ twoPumpController, fourPumpController }) => {
+    const [profile, setProfile] = useState<TasteProfile>({ bitter: 0, water: 0, sweet: 0, salty: 0, umami: 0, sour: 0 });
+
+    const updateProfile = (key: keyof TasteProfile, value: number) => {
+        setProfile(prevProfile => ({
+            ...prevProfile,
+            [key]: value,
+        }));
+    };
+
+    const startPumping = () => {
+        twoPumpController.pump(1, profile.bitter);
+        twoPumpController.pump(2, profile.water);
+        fourPumpController.pump(1, profile.sweet);
+        fourPumpController.pump(2, profile.salty);
+        fourPumpController.pump(3, profile.umami);
+        fourPumpController.pump(4, profile.sour);
+    };
+
+    const stopPumping = () => {
+        twoPumpController.pump(1, 0);
+        twoPumpController.pump(2, 0);
+        fourPumpController.pump(1, 0);
+        fourPumpController.pump(2, 0);
+        fourPumpController.pump(3, 0);
+        fourPumpController.pump(4, 0);
+    };
+
+    const saveProfile = () => {
+        const json = JSON.stringify(profile);
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'taste_profile.json';
+        link.click();
+        URL.revokeObjectURL(url);
+    };
+
+    const loadProfile = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (reader.result) {
+                    setProfile(JSON.parse(reader.result as string));
+                }
+            };
+            reader.readAsText(file);
+        }
+    };
+
+    return (
+        <div className="space-y-4">
+            <h1 className="text-xl font-bold">Configure Taste Profile</h1>
+            {Object.keys(profile).map(key => (
+                <div key={key} className="flex items-center space-x-2">
+                    <label className="w-32">{key}</label>
+                    <input 
+                        type="number" 
+                        value={profile[key as keyof TasteProfile]} 
+                        onChange={e => updateProfile(key as keyof TasteProfile, Number(e.target.value))} 
+                        className="border border-gray-300 rounded px-2 py-1"
+                        min="0" 
+                        max="255"
+                    />
+                </div>
+            ))}
+            <div className="flex space-x-4">
+                <button 
+                    className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                    onClick={startPumping}
+                >
+                    Start
+                </button>
+                <button 
+                    className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                    onClick={stopPumping}
+                >
+                    Stop
+                </button>
+                <button 
+                    className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+                    onClick={saveProfile}
+                >
+                    Save Profile
+                </button>
+                <input 
+                    type="file"
+                    accept=".json"
+                    onChange={loadProfile}
+                    className="hidden" 
+                    id="file-upload"
+                />
+                <label htmlFor="file-upload" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer">
+                    Load Profile
+                </label>
+            </div>
+        </div>
+    );
+};
 ```
 
-### components/ConnectionScreen.js
-This file is placed in the `components` directory and handles the connection to the devices.
+With the above code, we now have:
+- **A `DeviceConnectionScreen` component** for connecting devices that determines whether each device is a 2-pump or 4-pump configuration.
+- **A `TasteProfileScreen` component** that displays controls for setting taste profiles, saving/loading profiles, and starting/stopping the pumps.
 
-### components/TasteProfileScreen.js
-This file is placed in the `components` directory and handles the taste profile configuration and interaction.
-
-### Tailwind CSS Integration
-Ensure that you have Tailwind CSS set up in your React project. If not, follow the official guide to install and configure Tailwind CSS: https://tailwindcss.com/docs/guides/create-react-app
-
-### Running the Project
-Ensure your project setup is correct, then run your React application:
-```bash
-npm start
-```
-
-This setup will allow users to connect to the 2-pump and 4-pump devices, configure their taste profile, save it, load it, and control the pumps accordingly.
+This solution encompasses all the specified requirements, including auto-detection of device type and user interaction for setting and managing taste profiles.
