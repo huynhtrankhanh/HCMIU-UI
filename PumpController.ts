@@ -21,6 +21,7 @@ export class PumpController {
     private port: SerialPort | null = null;
     private writer: WritableStreamDefaultWriter | null = null;
     private reader: ReadableStreamDefaultReader<Uint8Array> | null = null;
+    private type: '2-pump' | '4-pump' | null = null;
 
     constructor() {
         this.motorPins = {};
@@ -38,8 +39,10 @@ export class PumpController {
 
             if (initialMessage === "GUSTATORY 2 PUMPS") {
                 this.motorPins = twoPumpConfig;
+                this.type = '2-pump';
             } else if (initialMessage === "GUSTATORY 4 PUMPS") {
                 this.motorPins = fourPumpConfig;
+                this.type = '4-pump';
             } else {
                 throw new Error("Unknown device configuration");
             }
@@ -47,6 +50,10 @@ export class PumpController {
         } catch (error) {
             console.error('Connection error:', error);
         }
+    }
+
+    get isTwoPump(): boolean {
+        return this.type === '2-pump';
     }
 
     async pump(pumpNumber: number, intensity: number): Promise<void> {
