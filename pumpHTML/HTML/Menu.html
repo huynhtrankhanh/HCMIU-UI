@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gustatory Menu</title>
+</head>
+<body>
+    <h1>Main Menu</h1>
+    <div>
+        <div>
+        <input type="button" onclick="newTaste()" value="Create New Taste">
+        </div>
+        <div>
+        <input type="button" onclick="location.href='Load.html'; localStorage.setItem('back',0)" value="Load Taste">
+        </div>
+        <input type="button" onclick="location.href='Import.html'" value="Import Taste">
+        <div>
+        <input type="button" onclick="location.href='Export.html'" value="Export Taste">
+        </div>
+        <div>
+        <input type="button" onclick="location.href='../Start.html'" value="Back">
+        </div>
+        <div>
+        <input type="button" onclick="localStorage.removeItem('SaveList')" value="Delete all local save (emergency)">
+        </div>
+    </div>
+    <script>
+        function newTaste(){
+            sessionStorage.removeItem('session'); 
+            location.href='pump2.html';
+        }
+    </script>
+</body>
+</html>
