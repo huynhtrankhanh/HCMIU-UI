@@ -72,7 +72,7 @@ export const TasteProfileScreen: React.FC<TasteProfileScreenProps> = ({ twoPumpC
             <h1 className="text-2xl font-bold text-center">Configure Taste Profile</h1>
             {Object.keys(profile).map(key => (
                 <div key={key} className="flex items-center space-x-4">
-                    <label className="w-32 capitalize font-medium">{key}</label>
+                    <label className="w-32 capitalize font-medium">{key} (0–255)</label>
                     <input 
                         type="number" 
                         value={profile[key as keyof TasteProfile]} 
