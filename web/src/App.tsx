@@ -8,9 +8,9 @@ export default function App() {
     const [fourPumpController, setFourPumpController] = useState<PumpController | null>(null);
 
     const handleConnect = (controller: PumpController) => {
-        if (controller.isTwoPump === true) {
+        if (controller.type === '2-pump') {
             setTwoPumpController(controller);
-        } else if (controller.isTwoPump === false) {
+        } else if (controller.type === '4-pump') {
             setFourPumpController(controller);
         } else {
             console.error('Unable to determine pump configuration.');
