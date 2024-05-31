@@ -18,15 +18,13 @@ export default function App() {
     };
 
     return (
-        <div className="p-4">
-            {!twoPumpController || !fourPumpController ? (
+            !twoPumpController || !fourPumpController ? (
                 <DeviceConnectionScreen onConnect={handleConnect} connectedCount={Number(twoPumpController !== null) + Number(fourPumpController !== null)} />
             ) : (
                 <TasteProfileScreen 
                     twoPumpController={twoPumpController} 
                     fourPumpController={fourPumpController} 
                 />
-            )}
-        </div>
+            )
     );
 }
