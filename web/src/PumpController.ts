@@ -21,7 +21,7 @@ export class PumpController {
     private port: SerialPort | null = null;
     private writer: WritableStreamDefaultWriter | null = null;
     private reader: ReadableStreamDefaultReader<Uint8Array> | null = null;
-    private type: '2-pump' | '4-pump' | null = null;
+    public type: '2-pump' | '4-pump' | null = null;
 
     constructor() {
         this.motorPins = {};
@@ -50,10 +50,6 @@ export class PumpController {
         } catch (error) {
             console.error('Connection error:', error);
         }
-    }
-
-    get isTwoPump(): boolean {
-        return this.type === '2-pump';
     }
 
     async pump(pumpNumber: number, intensity: number): Promise<void> {
