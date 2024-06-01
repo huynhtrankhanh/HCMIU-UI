@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PumpController } from './PumpController';
 import { DeviceConnectionScreen } from './DeviceConnectionScreen';
 import { TasteProfileScreen } from './TasteProfileScreen';
+import { Crusgkeo } from './Crusgkeo';
 
 export default function App() {
     const [twoPumpController, setTwoPumpController] = useState<PumpController | null>(null);
@@ -21,7 +22,8 @@ export default function App() {
             !twoPumpController || !fourPumpController ? (
                 <DeviceConnectionScreen onConnect={handleConnect} connectedCount={Number(twoPumpController !== null) + Number(fourPumpController !== null)} />
             ) : (
-                <TasteProfileScreen 
+                localStorage.experience === "crusgkeo" ? <Crusgkeo twoPumpController={twoPumpController} 
+                    fourPumpController={fourPumpController} /> : <TasteProfileScreen 
                     twoPumpController={twoPumpController} 
                     fourPumpController={fourPumpController} 
                 />
