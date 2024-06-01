@@ -378,6 +378,7 @@ class GameStateManager {
 
     if (doesBoardHaveMatches(newBoard)) {
       if (navigator.vibrate) navigator.vibrate(70);
+      this.#startPumping(sweet);
       this.state = {
         board: newBoard,
         mouseNotReleasedYet: this.state.mouseNotReleasedYet,
