@@ -20,6 +20,12 @@ type TasteProfile = {
     sour: number;
 };
 
+const noPumping = { bitter: 0, water: 0, sweet: 0, salty: 0, umami: 0, sour: 0 };
+const bitter = { ...noPumping, bitter: 255 };
+const sweet = { ...noPumping, sweet: 255 };
+const bittersweet = { ...noPumping, sweet: 255, bitter: 255 };
+const sourSweet = { ...noPumping, sour: 255, sweet: 255 };
+
 type GameFadeStatus =
   | { type: "no" }
   | { type: "fading"; startFadingAt: number };
@@ -125,6 +131,7 @@ class GameStateManager {
   }
 
   fadeStartScreen(timeOrigin: number) {
+    this.#startPumping(sourSweet);
     this.state = {
       type: "start screen fades away",
       animationTimeOrigin: timeOrigin,
@@ -150,6 +157,8 @@ class GameStateManager {
       this.state.type === "result screen fades away"
     )
       return;
+
+    this.#startPumping(bittersweet);
 
     if (this.state.type === "cell held") {
       this.state = {
@@ -177,6 +186,7 @@ class GameStateManager {
 
   fadeResult(timeOrigin: number) {
     if (this.state.type !== "result screen") return;
+    this.#startPumping(sourSweet);
 
     this.state = {
       type: "result screen fades away",
@@ -310,6 +320,7 @@ class GameStateManager {
       ];
 
       if (navigator.vibrate) navigator.vibrate(70);
+      this.#startPumping(sweet);
 
       this.state = {
         board: this.state.board,
@@ -322,6 +333,7 @@ class GameStateManager {
         fadeStatus: { type: "no" },
       };
     } else if (this.state.type === "reject swap") {
+      this.#startPumping(bitter);
       this.state = {
         board: this.state.board,
         mouseNotReleasedYet: this.state.mouseNotReleasedYet,
