@@ -14,7 +14,7 @@ export default function App() {
         } else if (controller.type === '4-pump') {
             setFourPumpController(controller);
         } else {
-            console.error('Unable to determine pump configuration.');
+            alert('Unable to determine pump configuration.');
         }
     };
 
