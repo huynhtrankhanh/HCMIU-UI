@@ -21,8 +21,6 @@ export const diamondCandy = makeImageObject(diamondCandyPNG);
 export const firstPlace = makeImageObject(firstPlacePNG);
 export const secondPlace = makeImageObject(secondPlacePNG);
 export const thirdPlace = makeImageObject(thirdPlacePNG);
-export const gameBackground = makeImageObject(gameBackgroundPNG);
-export const gameBackgroundDark = makeImageObject(gameBackgroundDarkPNG);
 
 const waitOnLoad = (image: HTMLImageElement) =>
   new Promise((resolve) => {
@@ -38,7 +36,5 @@ export const waitForAllImages = Promise.all(
     firstPlace,
     secondPlace,
     thirdPlace,
-    gameBackground,
-    gameBackgroundDark,
   ].map(waitOnLoad)
 );
