@@ -9,6 +9,16 @@ import {
   generateNewCandies,
   getToBeBlankedCells,
 } from "./Board";
+import { PumpController } from "../PumpController";
+
+type TasteProfile = {
+    bitter: number;
+    water: number;
+    sweet: number;
+    salty: number;
+    umami: number;
+    sour: number;
+};
 
 type GameFadeStatus =
   | { type: "no" }
@@ -79,10 +89,32 @@ class GameStateManager {
   state: GameState;
   #rowCount: number;
   #columnCount: number;
-  constructor(rowCount: number, columnCount: number) {
+  #twoPumpController: PumpController;
+  #fourPumpController: PumpController;
+  constructor(rowCount: number, columnCount: number, twoPumpController: PumpController, fourPumpController: PumpController) {
     this.state = { type: "start screen" };
     this.#rowCount = rowCount;
     this.#columnCount = columnCount;
+    this.#twoPumpController = twoPumpController;
+    this.#fourPumpController = fourPumpController;
+  }
+
+  #startPumping(profile: TasteProfile) {
+    this.#twoPumpController.pump(1, profile.bitter);
+    this.#twoPumpController.pump(2, profile.water);
+    this.#fourPumpController.pump(1, profile.sweet);
+    this.#fourPumpController.pump(2, profile.salty);
+    this.#fourPumpController.pump(3, profile.umami);
+    this.#fourPumpController.pump(4, profile.sour);
+  }
+
+  #stopPumping() {
+    this.#twoPumpController.pump(1, 0);
+    this.#twoPumpController.pump(2, 0);
+    this.#fourPumpController.pump(1, 0);
+    this.#fourPumpController.pump(2, 0);
+    this.#fourPumpController.pump(3, 0);
+    this.#fourPumpController.pump(4, 0);
   }
 
   displayStartScreen() {
