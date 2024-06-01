@@ -4,7 +4,8 @@ import GameStateManager from "./GameState";
 import MousePosition from "./MousePosition";
 import { waitForAllImages } from "./textures";
 import LeaderboardManager from "./LeaderboardManager";
-export const initialize = async () => {
+import { PumpController } from "../PumpController";
+export const initialize = async (twoPumpController: PumpController, fourPumpController: PumpController) => {
   await waitForAllImages;
 
   const canvas = document.getElementById("canvas") as HTMLCanvasElement;
@@ -29,7 +30,7 @@ export const initialize = async () => {
   const rowCount = 3;
   const columnCount = 8;
 
-  const state = new GameStateManager(rowCount, columnCount);
+  const state = new GameStateManager(rowCount, columnCount, twoPumpController, fourPumpController);
 
   canvas.addEventListener("click", (event) => {
     if (state.state.type === "start screen") {
