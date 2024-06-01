@@ -91,6 +91,7 @@ class GameStateManager {
   #columnCount: number;
   #twoPumpController: PumpController;
   #fourPumpController: PumpController;
+  #lastTimerId: number = -1;
   constructor(rowCount: number, columnCount: number, twoPumpController: PumpController, fourPumpController: PumpController) {
     this.state = { type: "start screen" };
     this.#rowCount = rowCount;
@@ -100,6 +101,8 @@ class GameStateManager {
   }
 
   #startPumping(profile: TasteProfile) {
+    clearTimeout(this.#lastTimerId);
+    this.#lastTimerId = setTimeout(() => { this.#stopPumping(); }, 1000);
     this.#twoPumpController.pump(1, profile.bitter);
     this.#twoPumpController.pump(2, profile.water);
     this.#fourPumpController.pump(1, profile.sweet);
