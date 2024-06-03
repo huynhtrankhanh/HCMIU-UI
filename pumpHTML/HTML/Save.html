@@ -53,7 +53,7 @@
         }
 
         SaveList.forEach(function(SaveElement, Counter) {
-            document.getElementById("SaveDisplay").innerHTML += `<div id="${Counter}" class="SaveElement"><h5>${SaveElement.Name}</h5><p>${SaveElement.Description}</p></div>`
+            document.getElementById("SaveDisplay").innerHTML += `<div id="${Counter}" class="SaveElement"><h3>${SaveElement.Name}</h3><p>${SaveElement.Description}</p></div>`
         });
 
         document.getElementById("NewSave").addEventListener("click", async()=>{
