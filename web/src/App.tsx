@@ -2,31 +2,31 @@ import React, { useState } from 'react';
 import { PumpController } from './PumpController';
 import { DeviceConnectionScreen } from './DeviceConnectionScreen';
 import { TasteProfileScreen } from './TasteProfileScreen';
+import { Crusgkeo } from './Crusgkeo';
 
 export default function App() {
     const [twoPumpController, setTwoPumpController] = useState<PumpController | null>(null);
     const [fourPumpController, setFourPumpController] = useState<PumpController | null>(null);
 
     const handleConnect = (controller: PumpController) => {
-        if (controller.isTwoPump === true) {
+        if (controller.type === '2-pump') {
             setTwoPumpController(controller);
-        } else if (controller.isTwoPump === false) {
+        } else if (controller.type === '4-pump') {
             setFourPumpController(controller);
         } else {
-            console.error('Unable to determine pump configuration.');
+            alert('Unable to determine pump configuration.');
         }
     };
 
     return (
-        <div className="p-4">
-            {!twoPumpController || !fourPumpController ? (
+            !twoPumpController || !fourPumpController ? (
                 <DeviceConnectionScreen onConnect={handleConnect} connectedCount={Number(twoPumpController !== null) + Number(fourPumpController !== null)} />
             ) : (
-                <TasteProfileScreen 
+                localStorage.experience === "crusgkeo" ? <Crusgkeo twoPumpController={twoPumpController} 
+                    fourPumpController={fourPumpController} /> : <TasteProfileScreen 
                     twoPumpController={twoPumpController} 
                     fourPumpController={fourPumpController} 
                 />
-            )}
-        </div>
+            )
     );
 }
