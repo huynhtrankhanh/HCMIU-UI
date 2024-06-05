@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gustatory</title>
 </head>
-<body class="root">
-    <div class="flex_col">
+<body class="background">
+    <div class="col">
         <h1 class="gustatory">Gustatory</h1>
         <button class="btn" id="button">Start</button>
     </div>  
     <style>
-        .root {
+        .background {
         position: relative;
         display: flex;
         flex-direction: column;
         background-color: rgb(255, 245, 224);
         overflow: hidden;
         }
-        .flex_col {
+        .col {
             position: relative;
             display: flex;
             flex-direction: column;
@@ -51,6 +51,11 @@
             background-color: rgb(65, 176, 110);
             padding: 38.5px 8px 38.5px 8px;
             box-shadow: 0px 11px 10.399999618530273px 0px rgba(0, 0, 0, 0.247);
+            border-color: yellow;
+            border-width: 0px;
+        }
+        .btn:hover{
+            border-width: 5px;
         }
         
 

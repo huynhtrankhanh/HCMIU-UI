@@ -5,15 +5,147 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Export File</title>
 </head>
-<body>
-    <h1>Export File</h1>
-    <div id="SaveDisplay">
+<body class="background">
+    <div class="column" id="column">
+        <div class="titleSave">Export</div>
+        <div class="content">
+            <div class="SaveList" id="SaveList">
+            </div>
+        </div>
+        <div class="alertstring" id="alertstring"></div>
+        <div class="row">
+            <div class="buttonbackground">
+            <img class="backImage" src="IMG/SaveBack.svg" alt="alt text" id="Back"/>
+            </div>
+            <div class="buttonbackground">
+                <img class="exportImage" src="IMG/export.svg" alt="alt text" id="Exportbutton"/>
+            </div>
+        </div>
     </div>
-    <div>
-        <input type="button" onclick="location.href='Menu.html'" value="Back">
-        <button id="Exportbutton">Export</button>
-    </div>
-    <pre id="output"></pre>
+
+    <style>
+    .background {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(255, 245, 224);
+        overflow: hidden;
+    }
+    .column {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: auto;
+        width: 86.94%;
+        max-width: 1251.921875px;
+
+    }
+    .titleSave {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        font: 800 120px/1.2 "Inter", Helvetica, Arial, serif;
+        color: rgb(141, 236, 180);
+        text-align: center;
+        text-shadow: 0px 8px 6px rgba(0, 0, 0, 0.24705882352941178);
+        margin: auto    ;
+
+    }
+    .content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 37px 0px;
+        margin: 30px 0px 0px;
+        width: 100%;
+    }
+    .save {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(65, 176, 110);
+        filter: drop-shadow(0px 11px 10.399999618530273px rgba(0, 0, 0, 0.247));
+        width: 100%;
+        gap: 4px 0px;
+        border-width: 0px;
+        border-color: yellow;
+    }
+    .SaveList {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+        height: 350px;
+        gap: 37px 0px;
+    }
+    .saveTitle {
+        position: relative;
+        font: 400 64px/1.2 "Inter", Helvetica, Arial, serif;
+        color: rgb(20, 30, 70);
+        pointer-events: none;
+    }
+    .descriptionTitle {
+        position: relative;
+        margin: 0px 1px 0px 0px;
+        font: 400 48px/1.2 "Inter", Helvetica, Arial, serif;
+        color: rgb(20, 30, 70);
+        pointer-events: none;
+    }
+    .alertstring{
+        position: relative;
+        display: flex;
+        font: 400 36px/1.2 "Inter", Helvetica, Arial, serif;
+        color: red;
+        white-space: normal;
+        justify-content: center;
+        width: 100%;
+        height: 50px;
+        padding: 25px;
+    }
+    .row {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        gap: 0px 10px;
+        margin: 0px 0px 0px;
+        width: 632.96875px;
+        max-width: 85%;
+        
+    }
+    .backImage {
+        position: relative;
+        margin: 0px 0px 1px;
+        width: 266px;
+        min-width: 0px;
+        object-fit: cover;
+    }
+    .exportImage {
+        position: relative;
+        margin: 1px 0px 0px;
+        width: 165px;
+        height: 165px;
+        min-width: 0px;
+        object-fit: cover;
+    }
+    .buttonbackground{
+        background-color: rgb(65, 176, 110);
+        width: 266px;
+        height: 165px;
+        align-content: center;
+        text-align: center;
+        outline-color: yellow;
+        outline-width: 5px;
+    }
+    .save:hover{
+        border-width: 5px !important;
+    }
+    .buttonbackground:hover{
+        outline-style: solid !important;
+    }
+    
+    </style>
 
     <script>
         var SaveList;
@@ -26,19 +158,28 @@
         }
 
         SaveList.forEach(function(SaveElement, Counter) {
-            document.getElementById("SaveDisplay").innerHTML += `<div id="${Counter}" class="SaveElement"><h5>${SaveElement.Name}</h5><p>${SaveElement.Description}</p></div>`
+            document.getElementById("SaveList").innerHTML += `
+            <button id="${Counter}" class="save"> 
+                <span class="saveTitle">Name: ${SaveElement.Name}\n</span>
+                <span class="descriptionTitle">Description: ${SaveElement.Description}</span>
+            </button>
+            `
         });
 
         document.body.addEventListener('click', function(event) {
-            if(event.target.classList.contains('SaveElement')) {
+            if(event.target.classList.contains('save')) {
+                if (selectsave != null){
+                document.getElementById(selectsave).style.borderWidth="0px";
+                }
                 selectsave=event.target.id; 
+                document.getElementById(selectsave).style.borderWidth="5px";
             }
         });
 
         document.getElementById("Exportbutton").addEventListener('click', ()=>{
             try {
                 if (selectsave == null){
-                    document.getElementById('output').textContent = `Please select a save`;
+                    document.getElementById('alertstring').textContent = `Please select a save`;
                     return
                 }
                 const a = document.createElement("a");
@@ -47,8 +188,12 @@
                 a.download = (SaveList[selectsave].Name);
                 a.click();
             } catch (error) {
-                document.getElementById('output').textContent = `Error: ${error}\n`;   
+                document.getElementById('alertstring').textContent = `Error: ${error}\n`;   
             }
+        })
+
+        document.getElementById("Back").addEventListener('click', ()=>{
+            location.href = 'Menu.html';
         })
     </script>
 </body>

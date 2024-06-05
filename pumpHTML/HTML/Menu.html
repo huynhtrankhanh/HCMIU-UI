@@ -7,20 +7,19 @@
     <title>Gustatory Menu</title>
 </head>
 
-<body class="mainMenuSection">
-    <div class="flexRow">
-        <img class="image" src="IMG/Back.svg" alt="alt text" id="Back"/>
-        <div class="flexCol">
-            <div class="heroTitle">Main Menu</div>
-            <button class="newTasteButton" id="NewTaste">Make New Taste</button>
-            <button class="loadTasteButton" id="Load">Load Taste Profile</button>
-            <button class="importTasteButton" id="Import">Import Taste Profile</button>
-            <button class="exportTasteButton" id="Export">Export Taste Profile</button>
+<body class="background">
+    <div class="Row">
+        <img class="image" src="IMG/back.svg" alt="alt text" id="Back"/>
+        <div class="Col">
+            <div class="Title">Main Menu</div>
+            <button class="NewTaste" id="NewTaste">Make New Taste</button>
+            <button class="loadButton" id="Load">Load Taste Profile</button>
+            <button class="importButton" id="Import">Import Taste Profile</button>
+            <button class="exportButton" id="Export">Export Taste Profile</button>
         </div>
     </div>
-
     <style>
-        .mainMenuSection {
+            .background {
             position: relative;
             display: flex;
             flex-direction: column;
@@ -28,7 +27,7 @@
                 overflow: hidden;
             }
 
-            .flexRow {
+            .Row {
                 position: relative;
                 display: flex;
                 justify-content: space-between;
@@ -47,16 +46,9 @@
                 min-width: 0px;
                 height: 96px;
                 object-fit: cover;
-                /*@include md {
-      margin-top: unset;
-      margin-bottom: unset;
-      width: 100%;
-      min-width: unset;
-      max-width: 96px;
-    }*/
             }
 
-            .flexCol {
+            .Col {
                 position: relative;
                 display: flex;
                 flex-direction: column;
@@ -64,16 +56,9 @@
                 width: 897px;
                 min-width: 0px;
                 margin-top: unset;
-
-                /*@include md {
-      margin-top: unset;
-      margin-bottom: unset;
-      width: 100%;
-      min-width: unset;
-    }*/
             }
 
-            .heroTitle {
+            .Title {
                 position: relative;
                 display: flex;
                 justify-content: center;
@@ -83,9 +68,10 @@
                 text-align: center;
                 text-shadow: 0px 7px 8px rgba(0, 0, 0, 0.24705882352941178);
                 margin: auto;
+                
             }
 
-            .newTasteButton {
+            .NewTaste {
                 position: relative;
                 display: flex;
                 justify-content: center;
@@ -98,9 +84,12 @@
                 background-color: rgb(65, 176, 110);
                 padding: 30px 8px 30px 8px;
                 box-shadow: 0px 10px 8px 0px rgba(0, 0, 0, 0.247);
+                border-width: 0px;
+                border-color: yellow;   
+
             }
 
-            .loadTasteButton {
+           .loadButton {
                 position: relative;
                 display: flex;
                 justify-content: center;
@@ -113,9 +102,11 @@
                 background-color: rgb(65, 176, 110);
                 padding: 30px 8px 30px 8px;
                 filter: drop-shadow(0px 10px 8px rgba(0, 0, 0, 0.247));
+                border-width: 0px;
+                border-color: yellow;;
             }
 
-            .importTasteButton {
+            .importButton {
                 position: relative;
                 display: flex;
                 justify-content: center;
@@ -128,9 +119,12 @@
                 background-color: rgb(65, 176, 110);
                 padding: 30px 8px 30px 8px;
                 box-shadow: 0px 10px 8px 0px rgba(0, 0, 0, 0.247);
+                border-width: 0px;
+                border-color: yellow;
+
             }
 
-            .exportTasteButton {
+            .exportButton {
                 position: relative;
                 display: flex;
                 justify-content: center;
@@ -143,6 +137,17 @@
                 background-color: rgb(65, 176, 110);
                 padding: 30px 8px 30px 8px;
                 box-shadow: 0px 10px 8px 0px rgba(0, 0, 0, 0.247);
+                border-width: 0px;
+                border-color: yellow;
+            }
+            .NewTaste:hover, .loadButton:hover, .importButton:hover, .exportButton:hover{
+                border-width: 5px;
+                padding: 25px 8px 25px 8px;
+            }
+            .image:hover{
+                outline-width: 5px;
+                outline-color: yellow;
+                outline-style: solid;
             }
     </style>
     <script>

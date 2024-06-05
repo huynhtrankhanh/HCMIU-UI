@@ -4,58 +4,224 @@
     <meta charset="UTF-8">
     <title>Taste Configuration</title>
 </head>
-<body>
-    <h1>Taste Configuration</h1>
-    <div>
-        <select id="segmentnumber" onchange="changesegment()">
-        </select>
+<body class="background">
+    <div class="Row">
+        <img class="image" src="IMG/back.svg" alt="alt text" id="Back"/>
+        <div class="Col">
+            <div class="Title">Taste Configuration</div>
+            <div class="Segment">
+                <select id="segmentnumber">
+                    <option>+</option>
+                </select>
+                <div class="icon">
+                    <img class="icon" src="IMG/delete.svg" alt="alt text" id="DeleteSegment"/>
+                </div>
+            </div>
+            <div class="Content">
+                <div class="ContentCol1">
+                    <label class="Label">
+                        Taste 1: 
+                        <input type="number" class="input" id="intensity1" min='0' max="255">
+                    </label>
+                    <label class="Label">
+                        Taste 2: 
+                        <input type="number" class="input" id="intensity2" min='0' max="255">
+                    </label>
+                    <label class="Label">
+                        Taste 3: 
+                        <input type="number" class="input" id="intensity3" min='0' max="255">
+                    </label>
+                    <label class="Label">
+                        Start Delay: 
+                        <input type="number" class="input" id="startDelay">
+                        <select class="typeselect" id="startValueType">
+                            <option>ms</option>
+                            <option>s</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="ContentCol2">
+                    <label class="Label">
+                        Taste 4: 
+                        <input type="number" class="input" id="intensity4" min='0' max="255">
+                    </label>
+                    <label class="Label">
+                        Taste 5: 
+                        <input type="number" class="input" id="intensity5" min='0' max="255">
+                    </label>
+                    <label class="Label">
+                        Taste 6: 
+                        <input type="number" class="input" id="intensity6" min='0' max="255">
+                    </label>
+                    <label class="Label">
+                        Execution Time: 
+                        <input type="number" class="input" id="executionTime">
+                        <select class="typeselect" id="executionValueType">
+                            <option>ms</option>
+                            <option>s</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <div class="iconrow">
+                <div class="icon">
+                    <img class="icon" src="IMG/Save.svg" alt="alt text" id="Save"/>
+                </div>
+                <div class="icon">
+                    <img class="icon" src="IMG/load.svg" alt="alt text" id="Load"/>
+                </div>
+                <div class="icon">
+                    <img class="icon" src="IMG/execute.svg" alt="alt text" id="connectButton"/>
+                </div>
+            </div>
+            <div class="alertstring" id="alertstring"></div>
+        </div>
     </div>
-    <div>
-        <label for="pumpNumber1">Pump Number 1:</label>
-    </div>
-    <div>
-        <label for="intensity1">Intensity (0-255):</label>
-        <input type="number" id="intensity1" min="0" max="255">
-    </div>
-    <div>
-        <label for="pumpNumber1">Pump Number 2:</label>
-    </div>
-    <div>
-        <label for="intensity2">Intensity (0-255):</label>
-        <input type="number" id="intensity2" min="0" max="255">
-    </div>
-    <div>
-        <label for="startDelay">Start Delay:</label>
-        <input type="number" id="startDelay">
-        <select name="startValueType" id="startValueType">
-            <option>milisecond</option>
-            <option>second</option>
-        </select>
-    </div>
-    <div>
-        <label for="executionTime">Execution Time:</label>
-        <input type="number" id="executionTime">
-        <select id="executionValueType">
-            <option>milisecond</option>
-            <option>second</option>
-        </select>
-    </div>
-    <input type="button" onclick="location.href='Menu.html'" value="Back">
-    <button id="connectButton">Connect</button>
-    <div>
-    <button id="AddSegment" onclick="AddSegment()">Add Segment</button>
-    <button id="DeleteSegment">Delete This Segment</button>
-    </div>
-    <div>
-        <button id="Save">Save</button>
-        <input type="button" onclick="location.href='Load.html';localStorage.setItem('back',1)" value="Load">
-    </div>
-    <pre id="output"></pre>
+
+    <style>
+        .background {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background-color: rgb(255, 245, 224);
+            overflow: hidden;
+        }
+
+        .Row {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            gap: 0px 0px;
+            margin: 0px auto;
+            width: 100%;
+            max-width: 1291.953125px;
+            padding: 0px 170px 0px 0px;
+            
+        }
+
+        .image {
+            position: relative;
+            margin: 15px 0px 793px;
+            width: 96px;
+            min-width: 0px;
+            height: 96px;
+            object-fit: cover;
+        }
+
+        .Col {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 1200px;
+            min-width: 0px;
+            margin-top: unset;
+        }
+
+        .Title {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            font: 800 100px/1.21 "Inter", Helvetica, Arial, serif;
+            color: rgb(141, 236, 180);
+            text-align: center;
+            text-shadow: 0px 7px 8px rgba(0, 0, 0, 0.24705882352941178);
+            margin: 0px;
+        }
+        .image:hover,.icon:hover{
+            outline-width: 5px;
+            outline-color: yellow;
+            outline-style: solid;
+        }
+        .Content {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            gap: 0px 10px;
+            margin: 98px 0px 0px;
+            width: 1088.984375px;
+            max-width: 85%;
+        }
+        .Segment{
+            position: relative;
+            display: flex;
+            justify-content: center;
+            margin: 44px 0px 0px auto;
+            width: auto;
+            max-width: 85%;
+            font: 400 64px/1.2 "Inter", Helvetica, Arial, serif;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            padding: 11px 16px 4px 16px;
+            gap: 0px 20px ;
+        }
+        .Label{
+            position: relative;
+            display: flex;
+            justify-content: left;
+            font: 400 32px/1.2 "Inter", Helvetica, Arial, serif;
+            color: rgb(0, 0, 0);
+            padding: 10px 0px;
+            
+        }
+        .input{
+            width: 100px;
+            font: 400 32px/1.2 "Inter", Helvetica, Arial, serif;
+            color: rgb(0, 0, 0);
+        }
+        .alertstring{
+            position: relative;
+            display: flex;
+            font: 400 36px/1.2 "Inter", Helvetica, Arial, serif;
+            color: red;
+            white-space: normal;
+            justify-content: center;
+            width: 100%;
+            height: 50px;
+            padding: 25px;
+        }
+        .iconrow{
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            gap: 0px 30px;
+            margin: 78px 100px 0px auto;
+            width: 269px;
+            max-width: 85%;
+        }
+        .icon{
+            background-color: rgb(65, 176, 110);
+            width: 96px;
+            height: 96px;
+            text-align: center;
+            outline-color: yellow;
+            outline-width: 5px;
+            object-fit: cover;
+        }
+        .Segment select{
+            background-color: rgb(65, 176, 110);
+            width: 150px;
+            font: 25px/1.2 "Inter", Helvetica, Arial, serif;
+            color: rgb(20, 30, 70);
+            height: auto;
+            border: 5px solid transparent;
+        }
+
+        .Segment select:hover{
+            border-color: yellow; 
+        }
+    </style>
+
     <script>
         class segment{
-            constructor(intensity1, intensity2, startDelay, startValueType, executionTime, executionValueType){
+            constructor(intensity1, intensity2, intensity3, intensity4, intensity5, intensity6, startDelay, startValueType, executionTime, executionValueType){
                 this.intensity1=intensity1; 
                 this.intensity2=intensity2;
+                this.intensity3=intensity3;
+                this.intensity4=intensity4;
+                this.intensity5=intensity5;
+                this.intensity6=intensity6;
                 this.startDelay=startDelay;
                 this.startValueType=startValueType;
                 this.executionTime=executionTime;
@@ -77,37 +243,41 @@
             try{
                 segments = JSON.parse(sessionStorage.getItem("session"));
                 segmentcount = segments.length;
-                for (let index = 0; index < segments.length; index++) {
+                document.getElementById("segmentnumber").options[0].text="Segment 1"
+                for (let index = 1; index < segments.length; index++) {
                     const newsegment = document.createElement("option");
                     newsegment.text = "Segment "+(index+1);
                     document.getElementById("segmentnumber").add(newsegment);
-                }          
+                }
+                var newsegment = document.createElement("option");
+                newsegment.text = "+"
+                document.getElementById("segmentnumber").add(newsegment)
                 document.getElementById('intensity1').value=segments[0].intensity1;
                 document.getElementById('intensity2').value=segments[0].intensity2;
+                document.getElementById('intensity3').value=segments[0].intensity3;
+                document.getElementById('intensity4').value=segments[0].intensity4;
+                document.getElementById('intensity5').value=segments[0].intensity5;
+                document.getElementById('intensity6').value=segments[0].intensity6;
                 document.getElementById('startDelay').value=segments[0].startDelay;
                 document.getElementById('startValueType').selectedIndex=segments[0].startValueType;
                 document.getElementById('executionTime').value=segments[0].executionTime;
                 document.getElementById('executionValueType').selectedIndex=segments[0].executionValueType;
             }catch(error){
-                document.getElementById('output').textContent = `Error: ${error}\n`;
-            }}
-        else
-        {   
-            AddSegment();
-        }}
+                document.getElementById('alertstring').textContent = `Error: ${error}\n`;
+            }}else AddSegment();
+}
 
-        document.getElementById('segmentnumber').addEventListener('onChange', async()=>{
+        document.getElementById('segmentnumber').addEventListener('change', ()=>{
             try {
                 const segmentindex = document.getElementById('segmentnumber').selectedIndex;
-                document.getElementById('output').textContent = `Segment ${segmentindex} selected  `;
-                document.getElementById('intensity1').value=segments[segmentindex].intensity1;
-                document.getElementById('intensity2').value=segments[segmentindex].intensity2;
-                document.getElementById('startDelay').value=segments[segmentindex].startDelay;
-                document.getElementById('startValueType').selectedIndex=segments[segmentindex].startValueType;
-                document.getElementById('executionTime').value=segments[segmentindex].executionTime;
-                document.getElementById('executionValueType').selectedIndex=segments[segmentindex].executionValueType;
+                if (document.getElementById('segmentnumber').options[segmentindex].text == "+"){
+                    AddSegment();
+                    return;
+                }
+                document.getElementById('alertstring').textContent = `Segment ${segmentindex+1} selected  `;
+                ChangeSegment(segmentindex)
             } catch (error) {
-                document.getElementById('output').textContent = `Error: ${error}\n`;
+                document.getElementById('alertstring').textContent = `Error: ${error}\n`;
             }
         });
 
@@ -116,7 +286,7 @@
                 sessionStorage.setItem("session",JSON.stringify(segments));
                 document.location.href="Connect.html"
             } catch (error) {
-                document.getElementById('output').textContent = `Error: ${error}\n`;
+                document.getElementById('alertstring').textContent = `Error: ${error}\n`;
             }
         });
 
@@ -125,7 +295,7 @@
                 sessionStorage.setItem("session",JSON.stringify(segments));
                 document.location.href="Save.html"
             } catch (error) {
-                document.getElementById('output').textContent += `Error: ${error}\n`;
+                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
             }
         });
         
@@ -133,100 +303,165 @@
         document.getElementById("intensity1").addEventListener('blur', async() => {
             try{
                 if (intensity1 < 0 || intensity1 > 255) {
-                    document.getElementById('output').textContent += 'Invalid intensity for pump 1. Must be between 0 and 255.\n';
+                    document.getElementById('alertstring').textContent += 'Invalid intensity for pump 1. Must be between 0 and 255.\n';
                     return;
                 }
                 segments[document.getElementById('segmentnumber').selectedIndex].intensity1 = document.getElementById("intensity1").value;
             }catch (error){
-                document.getElementById('output').textContent += `Error: ${error}\n`;
+                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
             }
         });
 
         document.getElementById("intensity2").addEventListener('blur', async() => {
             try{
                 if (intensity2 < 0 || intensity2 > 255) {
-                    document.getElementById('output').textContent += 'Invalid intensity for pump 2. Must be between 0 and 255.\n';
+                    document.getElementById('alertstring').textContent += 'Invalid intensity for pump 2. Must be between 0 and 255.\n';
                     return;
                 }
                 segments[document.getElementById('segmentnumber').selectedIndex].intensity2 = document.getElementById("intensity2").value;
             }catch (error){
-                document.getElementById('output').textContent += `Error: ${error}\n`;
+                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
             }
         });
+
+        document.getElementById("intensity3").addEventListener('blur', async() => {
+            try{
+                if (intensity3 < 0 || intensity3 > 255) {
+                    document.getElementById('alertstring').textContent += 'Invalid intensity for pump 3. Must be between 0 and 255.\n';
+                    return;
+                }
+                segments[document.getElementById('segmentnumber').selectedIndex].intensity3 = document.getElementById("intensity3").value;
+            }catch (error){
+                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
+            }
+        });
+
+        document.getElementById("intensity4").addEventListener('blur', async() => {
+            try{
+                if (intensity4 < 0 || intensity4 > 255) {
+                    document.getElementById('alertstring').textContent += 'Invalid intensity for pump 4. Must be between 0 and 255.\n';
+                    return;
+                }
+                segments[document.getElementById('segmentnumber').selectedIndex].intensity4 = document.getElementById("intensity4").value;
+            }catch (error){
+                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
+            }
+        });
+
+        document.getElementById("intensity5").addEventListener('blur', async() => {
+            try{
+                if (intensity5 < 0 || intensity5 > 255) {
+                    document.getElementById('alertstring').textContent += 'Invalid intensity for pump 5. Must be between 0 and 255.\n';
+                    return;
+                }
+                segments[document.getElementById('segmentnumber').selectedIndex].intensity5 = document.getElementById("intensity5").value;
+            }catch (error){
+                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
+            }
+        });
+
+        document.getElementById("intensity6").addEventListener('blur', async() => {
+            try{
+                if (intensity6 < 0 || intensity6 > 255) {
+                    document.getElementById('alertstring').textContent += 'Invalid intensity for pump 6. Must be between 0 and 255.\n';
+                    return;
+                }
+                segments[document.getElementById('segmentnumber').selectedIndex].intensity6 = document.getElementById("intensity6").value;
+            }catch (error){
+                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
+            }
+        });
+
         document.getElementById("executionTime").addEventListener('blur', async() => {
             try{
             segments[document.getElementById('segmentnumber').selectedIndex].executionTime = document.getElementById("executionTime").value;
             }catch (error){
-                document.getElementById('output').textContent += `Error: ${error}\n`;
+                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
             }
         });
         document.getElementById("startDelay").addEventListener('blur', async() => {
             try{
             segments[document.getElementById('segmentnumber').selectedIndex].startDelay = document.getElementById("startDelay").value;
             }catch (error){
-                document.getElementById('output').textContent += `Error: ${error}\n`;
+                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
             }
         });
         document.getElementById("executionValueType").addEventListener('change', async() => {
             try{
             segments[document.getElementById('segmentnumber').selectedIndex].executionValueType = document.getElementById("executionValueType").selectedIndex;
             }catch (error){
-                document.getElementById('output').textContent += `Error: ${error}\n`;
+                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
             }
         });
         document.getElementById("startValueType").addEventListener('change', async() => {
             try{
             segments[document.getElementById('segmentnumber').selectedIndex].startValueType = document.getElementById("startValueType").selectedIndex;
             }catch (error){
-                document.getElementById('output').textContent += `Error: ${error}\n`;
+                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
             }
         });
 
-        document.getElementById("DeleteSegment").addEventListener('click', async()=>{
+        document.getElementById("DeleteSegment").addEventListener('click', ()=>{
             try {
                 segmentcount -= 1;
-                await segments.splice(document.getElementById("segmentnumber").selectedIndex,1);
-                await document.getElementById('segmentnumber').remove(document.getElementById("segmentnumber").selectedIndex)
+                segments.splice(document.getElementById("segmentnumber").selectedIndex,1);
+                document.getElementById('segmentnumber').remove(document.getElementById("segmentnumber").selectedIndex)
+                if (segmentcount==0){
+                    AddSegment();
+                    return;
+                }
                 document.getElementById('intensity1').value=segments[0].intensity1;
                 document.getElementById('intensity2').value=segments[0].intensity2;
+                document.getElementById('intensity3').value=segments[0].intensity3;
+                document.getElementById('intensity4').value=segments[0].intensity4;
+                document.getElementById('intensity5').value=segments[0].intensity5;
+                document.getElementById('intensity6').value=segments[0].intensity6;
                 document.getElementById('startDelay').value=segments[0].startDelay;
                 document.getElementById('startValueType').selectedIndex=segments[0].startValueType;
                 document.getElementById('executionTime').value=segments[0].executionTime;
                 document.getElementById('executionValueType').selectedIndex=segments[0].executionValueType;
             } catch (error) {
-                document.getElementById('output').textContent += `Error: ${error}\n`;
+                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
             }
+        })
+
+        document.getElementById("Load").addEventListener('click',()=>{
+            location.href='Load.html';localStorage.setItem('back',1)
         })
 
         function AddSegment(){
             try {
-                segments[segmentcount] = new segment(0,0,0,0,0,0);
+                segments[segmentcount] = new segment(0,0,0,0,0,0,0,0,0,0);
                 segmentcount += 1;
                 var newsegment = document.createElement("option");
-                newsegment.text = "Segment "+segmentcount;
+                newsegment.text = "+"
                 var segmentoption = document.getElementById("segmentnumber");
+                segmentoption.options[segmentcount-1].text=("Segment "+segmentcount);
                 segmentoption.add(newsegment);
-                document.getElementById('output').textContent = `Segment ${segmentcount} created`;
+                segmentoption.selectedIndex=segmentcount-1;
+                ChangeSegment(segmentcount-1)
+                document.getElementById('alertstring').textContent = `Segment ${segmentcount} created`;
             } catch(error){
-                document.getElementById('output').textContent = `Error: ${error}\n`;
+                document.getElementById('alertstring').textContent = `Error: ${error}\n`;
             }
         };
 
-        function changesegment(){
-            try {
-                const segmentindex = document.getElementById('segmentnumber').selectedIndex;
-                document.getElementById('intensity1').value= segments[segmentindex].intensity1;
-                document.getElementById('intensity2').value= segments[segmentindex].intensity2;
-                document.getElementById('startDelay').value= segments[segmentindex].startDelay;
-                document.getElementById('startValueType').selectedIndex=segments[segmentindex].startValueType;
-                document.getElementById('executionTime').value=segments[segmentindex].executionTime;
-                document.getElementById('executionValueType').selectedIndex=segments[segmentindex].executionValueType;
-            } catch (error) {
-                document.getElementById('output').textContent = `Error: ${error}\n`;
-            }
-        };
+        document.getElementById("Back").addEventListener('click',()=>{
+            location.href="Menu.html"
+        })
 
-
+        function ChangeSegment(segmentindex){
+            document.getElementById('intensity1').value=segments[segmentindex].intensity1;
+            document.getElementById('intensity2').value=segments[segmentindex].intensity2;
+            document.getElementById('intensity3').value=segments[segmentindex].intensity3;
+            document.getElementById('intensity4').value=segments[segmentindex].intensity4;
+            document.getElementById('intensity5').value=segments[segmentindex].intensity5;
+            document.getElementById('intensity6').value=segments[segmentindex].intensity6;
+            document.getElementById('startDelay').value=segments[segmentindex].startDelay;
+            document.getElementById('startValueType').selectedIndex=segments[segmentindex].startValueType;
+            document.getElementById('executionTime').value=segments[segmentindex].executionTime;
+            document.getElementById('executionValueType').selectedIndex=segments[segmentindex].executionValueType;
+        }
 
     </script>
 </body>

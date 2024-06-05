@@ -3,59 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Connect Device</title>
 </head>
-<body>
-    <h1>Connect Device</h1>
-    <button id="connectButton">Connect device</button>
-    <button id="sendButton">Send Command</button>
-    <pre id="output"></pre>
+<body class="background">
+    <div class="Row">
+        <img class="image" src="IMG/back.svg" alt="alt text" id="Back"/>
+        <div class="Col">
+            <div class="Title">Connect Device</div>
+            <button class="Connect" id="Device1">Device 1: </button>
+            <button class="Connect" id="Device2">Device 2: </button>
+            <div class="icon">
+                <img class="icon" src="IMG/execute.svg" alt="alt text" id="sendButton"/>
+            </div>
+            <div class="alertstring" id="alertstring"></div>
+        </div>
+        
+    </div>
+
+    <style>
+        .background {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background-color: rgb(255, 245, 224);
+            overflow: hidden;
+        }
+        .Row {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            gap: 0px 0px;
+            margin: 0px auto;
+            width: 89.72%;
+            max-width: 1291.953125px;
+            padding: 0px 170px 0px 0px;
+            
+        }
+
+        .image {
+            position: relative;
+            margin: 15px 0px 793px;
+            width: 96px;
+            min-width: 0px;
+            height: 96px;
+            object-fit: cover;
+        }
+
+        .Col {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 897px;
+            min-width: 0px;
+            margin-top: unset;
+            gap: 5%;
+        }
+
+        .Title {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            font: 800 100px/1.21 "Inter", Helvetica, Arial, serif;
+            color: rgb(141, 236, 180);
+            text-align: center;
+            text-shadow: 0px 7px 8px rgba(0, 0, 0, 0.24705882352941178);
+            width: 100%;
+            margin-top: 10%;
+        }
+        .image:hover,.icon:hover{
+            outline-width: 5px;
+            outline-color: yellow;
+            outline-style: solid;
+        }
+        .icon{
+            background-color: rgb(65, 176, 110);
+            width: 96px;
+            height: 96px;
+            text-align: center;
+            outline-color: yellow;
+            outline-width: 5px;
+            object-fit: cover;
+        }
+        .Connect {
+            position: relative;
+            display: flex;
+            justify-content: left;
+            width: 778px;
+            max-width: 100%;
+            font: 400 64px/1.2 "Inter", Helvetica, Arial, serif;
+            color: rgb(20, 30, 70);
+            text-align: left;
+            background-color: rgb(65, 176, 110);
+            padding: 30px 8px 30px 8px;
+            box-shadow: 0px 10px 8px 0px rgba(0, 0, 0, 0.247);
+            border-width: 5px;
+            border-color: transparent;   
+
+        }
+        .Connect:hover{
+            border-color: yellow;
+        }
+        .alertstring{
+            position: relative;
+            display: flex;
+            font: 400 36px/1.2 "Inter", Helvetica, Arial, serif;
+            color: red;
+            white-space: normal;
+            justify-content: center;
+            width: 100%;
+            height: 50px;
+            padding: 25px;
+        }
+
+    </style>
 
     <script>
-        const motorPins = {
+        var segments=[];
+
+        window.onload = ()=>{
+            if (sessionStorage.getItem("session")){
+                try{
+                    segments = JSON.parse(sessionStorage.getItem("session"));
+                }catch(error){
+                    document.getElementById('alertstring').textContent = `Error: ${error}\n`;
+                }}
+            else{
+                document.getElementById('alertstring').textContent = `No session`;
+            }
+        }
+
+        const twopump={
             1: { digital1: 2, digital2: 4, pwm: 3 },
             2: { digital1: 6, digital2: 7, pwm: 5 },
         };
 
-        let port;
-        let writer;
+        const fourpump={
+            1: { digital1: 2, digital2: 4, pwm: 3 },
+            2: { digital1: 7, digital2: 8, pwm: 5 },
+            3: { digital1: 10, digital2: 11, pwm: 6 },
+            4: { digital1: 12, digital2: 13, pwm: 9 },
+        }
 
-        document.getElementById('connectButton').addEventListener('click', async () => {
+        let port1;
+        let writer1;
+        let reader1;
+        let motorPins1;
+        let type1;
+
+        let port2;
+        let writer2;
+        let reader2;
+        let motorPins2;
+        let type2;
+
+        document.getElementById('Device1').addEventListener('click', async () => {
             try {
-                port = await navigator.serial.requestPort();
+                port1 = await navigator.serial.requestPort();
                 await port.open({ baudRate: 9600 });
-                writer = port.writable.getWriter();
-                document.getElementById('output').textContent = 'Connected to serial port.\n';
+                writer1 = port1.writable.getWriter();
+                reader1 = port1.reader.getReader();
+                const initialMessage = await readInitialMessage(reader1);
+                document.getElementById('Device1').innerHTML = `Device 1: ${initialMessage}`
+                if (initialMessage === "GUSTATORY 2 PUMPS") {
+                    motorPins1 = twoPumpConfig;
+                    type1 = '2-pump';
+                }
+                if (initialMessage === "GUSTATORY 4 PUMPS") {
+                    motorPins1 = fourPumpConfig;
+                    type1 = '4-pump';
+                } else {
+                    document.getElementById('alertstring').textContent = `Unknown Device Configuration`;
+                }
             } catch (error) {
-                document.getElementById('output').textContent = `Error: ${error}\n`;
+                document.getElementById('alertstring').textContent = `Error: ${error}\n`;
+            }
+        });
+        
+        document.getElementById('Device2').addEventListener('click', async () => {
+            try {
+                port2 = await navigator.serial.requestPort();
+                await port.open({ baudRate: 9600 });
+                writer2 = port2.writable.getWriter();
+                reader2 = port2.reader.getReader();
+                const initialMessage = await readInitialMessage(reader1);
+                document.getElementById('Device1').innerHTML = `Device 2: ${initialMessage}`
+                if (initialMessage === "GUSTATORY 2 PUMPS") {
+                    motorPins2 = twoPumpConfig;
+                    type1 = '2-pump';
+                } else if (initialMessage === "GUSTATORY 4 PUMPS") {
+                    motorPins2 = fourPumpConfig;
+                    type1 = '4-pump';
+                } else {
+                    document.getElementById('alertstring').textContent = `Unknown Device Configuration`;
+                }
+            } catch (error) {
+                document.getElementById('alertstring').textContent = `Error: ${error}\n`;
             }
         });
 
         document.getElementById('sendButton').addEventListener('click', () => {
-            segments.forEach(Segment, async() => {
-                
-                await sleep(timeconverter(Segment.startDelay,Segment.startValueType));
-                intensityChange(1, Segment.intensity1);
-                intensityChange(2, Segment.intensity2);
-                await sleep(timeconverter(Segment.executionTime,Segment.executionValueType));
-                intensityChange(1, 0);
-                intensityChange(2, 0);
-            });
+            if (type1===type2|(type1|type2)==null){
+                document.getElementById('alertstring').textContent = `Invalid Connection`;
+                return;
+            }
+            if (type1==='2-pump'){
+                execute(writer1,writer2);
+            }
+            else if(type2==='2-pump'){
+                execute(writer2,writer1);
+            }
+            else document.getElementById('alertstring').textContent = `sending error`;
         });
 
-        async function intensityChange(pumpnumber, intensity){
+        async function intensityChange(pumpnumber, intensity, writer){
             try {
-                await sendCommand(0, motorPins[pumpnumber].digital1, 0);
-                await sendCommand(0, motorPins[pumpnumber].digital2, 1);
+                await sendCommand(0, motorPins[pumpnumber].digital1, 0, writer);
+                await sendCommand(0, motorPins[pumpnumber].digital2, 1, writer);
                 await sendCommand(1, motorPins[pumpnumber].pwm, intensity);
-                document.getElementById('output').textContent += `Pump ${pumpnumber} sent successfully.\n`;
+                document.getElementById('alertstring').textContent = `Pump ${pumpnumber} sent successfully.\n`;
             } catch (error) {
-                document.getElementById('output').textContent += `Error sending command: ${error}\n`;
+                document.getElementById('alertstring').textContent = `Error sending command: ${error}\n`;
             }
             return
         }
 
-        async function sendCommand(commandType, pin, value) {
+        async function sendCommand(commandType, pin, value, writer) {
             const data = new Uint8Array([commandType, pin, value]);
             await writer.write(data);
         }
@@ -70,9 +244,54 @@
             else if (type == 1)
             return value*1000;
             else {
-                document.getElementById('output').textContent += `Unexpected Error\n`;
+                document.getElementById('alertstring').textContent = `Unexpected Error\n`;
             }
             return 0
+        }
+
+        async function readInitialMessage(reader) {
+            if (!reader) {
+                throw new Error("Serial port not open");
+            }
+
+            const messageLength = "GUSTATORY 4 PUMPS".length;
+            const decoder = new TextDecoder();
+            let receivedData = new Uint8Array(messageLength);
+            let receivedLength = 0;
+
+            while (receivedLength < messageLength) {
+                const { value, done } = await reader.read();
+                if (done) break;
+
+                if (value) {
+                    const toCopy = Math.min(value.length, messageLength - receivedLength);
+                    receivedData.set(value.slice(0, toCopy), receivedLength);
+                    receivedLength += toCopy;
+                }
+            }
+
+            return decoder.decode(receivedData).trim();
+        }
+
+        async function execute(pump2writer,pump4writer){
+            document.getElementById('alertstring').textContent = `Executing...`;
+            await segments.forEach(Segment, async() => {
+                await sleep(timeconverter(Segment.startDelay,Segment.startValueType));
+                intensityChange(1, Segment.intensity1, pump2writer);
+                intensityChange(2, Segment.intensity2, pump2writer);
+                intensityChange(1, Segment.intensity3, pump4writer);
+                intensityChange(2, Segment.intensity4, pump4writer);
+                intensityChange(3, Segment.intensity5, pump4writer);
+                intensityChange(4, Segment.intensity6, pump4writer);
+                await sleep(timeconverter(Segment.executionTime,Segment.executionValueType));
+                intensityChange(1, 0, pump2writer);
+                intensityChange(2, 0, pump2writer);
+                intensityChange(1, 0, pump4writer);
+                intensityChange(2, 0, pump4writer);
+                intensityChange(3, 0, pump4writer);
+                intensityChange(4, 0, pump4writer);
+            });
+            location.href = 'Delivered.html'
         }
     </script>
 </body>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taste Delivered</title>
+</head>
+<body class="background">
+    <div class="col">
+        <h1 class="gustatory">Taste has been delivered</h1>
+        <div class="row">
+            <div class="buttonbackground">
+            <img class="backImage" src="IMG/SaveBack.svg" alt="alt text" id="Back"/></div>
+            <div class="buttonbackground">
+            <img class="saveImage" src="IMG/Save.svg" alt="alt text" id="Savebutton"/></div>
+        </div>
+    </div>  
+    <style>
+        .background {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(255, 245, 224);
+        overflow: hidden;
+        }
+        .col {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 110px 0px;
+            margin: 150px auto;
+            width: 85%;
+            }
+        .gustatory {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            font: 800 120px/1.2 "Inter", Helvetica, Arial, serif;
+            color: rgb(141, 236, 180);
+            text-align: center;
+            text-shadow: 0px 8px 6px rgba(0, 0, 0, 0.24705882352941178);
+        }
+        .row {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        gap: 0px 10px;
+        margin: 0px 0px 0px;
+        width: 632.96875px;
+        max-width: 85%;
+
+        }
+        .buttonbackground{
+        background-color: rgb(65, 176, 110);
+        width: 266px;
+        height: 165px;
+        align-content: center;
+        text-align: center;
+        outline: 5px solid transparent;
+        }
+        .buttonbackground:hover{
+            outline-color: yellow;
+        }
+        
+
+    </style>
+    
+    <script>
+        document.getElementById("Back").addEventListener('click',()=>{
+            sessionStorage.setItem("DeliverBack",0);
+            location.href="pump2.html"
+        })
+        document.getElementById("Savebutton").addEventListener('click',()=>{
+            sessionStorage.setItem("DeliverBack",1);
+            location.href="Save.html"
+        })
+    </script>
+</body>
+</html>
