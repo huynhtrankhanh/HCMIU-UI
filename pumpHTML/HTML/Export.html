@@ -188,7 +188,7 @@
                 a.download = (SaveList[selectsave].Name);
                 a.click();
             } catch (error) {
-                document.getElementById('alertstring').textContent = `Error: ${error}\n`;   
+                console.error(error);
             }
         })
 

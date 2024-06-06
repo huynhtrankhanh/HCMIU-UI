@@ -127,7 +127,7 @@
                 try{
                     segments = JSON.parse(sessionStorage.getItem("session"));
                 }catch(error){
-                    document.getElementById('alertstring').textContent = `Error: ${error}\n`;
+                    console.error(error)
                 }}
             else{
                 document.getElementById('alertstring').textContent = `No session`;
@@ -177,7 +177,7 @@
                     document.getElementById('alertstring').textContent = `Unknown Device Configuration`;
                 }
             } catch (error) {
-                document.getElementById('alertstring').textContent = `Error: ${error}\n`;
+                console.error(error)
             }
         });
         
@@ -199,7 +199,7 @@
                     document.getElementById('alertstring').textContent = `Unknown Device Configuration`;
                 }
             } catch (error) {
-                document.getElementById('alertstring').textContent = `Error: ${error}\n`;
+                console.error(error)
             }
         });
 
@@ -224,7 +224,7 @@
                 await sendCommand(1, motorPins[pumpnumber].pwm, intensity);
                 document.getElementById('alertstring').textContent = `Pump ${pumpnumber} sent successfully.\n`;
             } catch (error) {
-                document.getElementById('alertstring').textContent = `Error sending command: ${error}\n`;
+                console.error(error)
             }
             return
         }

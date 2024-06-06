@@ -228,13 +228,20 @@
                 this.executionValueType=executionValueType;
             }
         }
-        const motorPins = {
-            1: { digital1: 2, digital2: 4, pwm: 3 },
-            2: { digital1: 6, digital2: 7, pwm: 5 },
-        };
 
-        let port;
-        let writer;
+        const segmentoption=document.getElementById('segmentnumber');
+        const intensity1 = document.getElementById('intensity1');
+        const intensity2 = document.getElementById('intensity2');
+        const intensity3 = document.getElementById('intensity3');
+        const intensity4 = document.getElementById('intensity4');
+        const intensity5 = document.getElementById('intensity5');
+        const intensity6 = document.getElementById('intensity6');
+        const startDelay = document.getElementById('startDelay');
+        const startValueType = document.getElementById('startValueType');
+        const executionTime = document.getElementById('executionTime');
+        const executionValueType = document.getElementById('executionValueType');
+        const alertstring = document.getElementById('alertstring');
+
         var segmentcount=0;
         var segments=[];
 
@@ -243,41 +250,41 @@
             try{
                 segments = JSON.parse(sessionStorage.getItem("session"));
                 segmentcount = segments.length;
-                document.getElementById("segmentnumber").options[0].text="Segment 1"
+                segmentoption.options[0].text="Segment 1"
                 for (let index = 1; index < segments.length; index++) {
                     const newsegment = document.createElement("option");
                     newsegment.text = "Segment "+(index+1);
-                    document.getElementById("segmentnumber").add(newsegment);
+                    segmentoption.add(newsegment);
                 }
                 var newsegment = document.createElement("option");
                 newsegment.text = "+"
-                document.getElementById("segmentnumber").add(newsegment)
-                document.getElementById('intensity1').value=segments[0].intensity1;
-                document.getElementById('intensity2').value=segments[0].intensity2;
-                document.getElementById('intensity3').value=segments[0].intensity3;
-                document.getElementById('intensity4').value=segments[0].intensity4;
-                document.getElementById('intensity5').value=segments[0].intensity5;
-                document.getElementById('intensity6').value=segments[0].intensity6;
-                document.getElementById('startDelay').value=segments[0].startDelay;
-                document.getElementById('startValueType').selectedIndex=segments[0].startValueType;
-                document.getElementById('executionTime').value=segments[0].executionTime;
-                document.getElementById('executionValueType').selectedIndex=segments[0].executionValueType;
+                segmentoption.add(newsegment)
+                intensity1.value=segments[0].intensity1;
+                intensity2.value=segments[0].intensity2;
+                intensity3.value=segments[0].intensity3;
+                intensity4.value=segments[0].intensity4;
+                intensity5.value=segments[0].intensity5;
+                intensity6.value=segments[0].intensity6;
+                startDelay.value=segments[0].startDelay;
+                startValueType.selectedIndex=segments[0].startValueType;
+                executionTime.value=segments[0].executionTime;
+                executionValueType.selectedIndex=segments[0].executionValueType;
             }catch(error){
-                document.getElementById('alertstring').textContent = `Error: ${error}\n`;
+                console.error(error);
             }}else AddSegment();
 }
 
-        document.getElementById('segmentnumber').addEventListener('change', ()=>{
+        segmentoption.addEventListener('change', ()=>{
             try {
-                const segmentindex = document.getElementById('segmentnumber').selectedIndex;
-                if (document.getElementById('segmentnumber').options[segmentindex].text == "+"){
+                const segmentindex = segmentoption.selectedIndex;
+                if (segmentoption.options[segmentindex].text == "+"){
                     AddSegment();
                     return;
                 }
-                document.getElementById('alertstring').textContent = `Segment ${segmentindex+1} selected  `;
+                alertstring.textContent = `Segment ${segmentindex+1} selected  `;
                 ChangeSegment(segmentindex)
-            } catch (error) {
-                document.getElementById('alertstring').textContent = `Error: ${error}\n`;
+            } catch(error){
+                console.error(error);
             }
         });
 
@@ -285,8 +292,8 @@
             try {
                 sessionStorage.setItem("session",JSON.stringify(segments));
                 document.location.href="Connect.html"
-            } catch (error) {
-                document.getElementById('alertstring').textContent = `Error: ${error}\n`;
+            } catch(error){
+                console.error(error);
             }
         });
 
@@ -294,134 +301,139 @@
             try {
                 sessionStorage.setItem("session",JSON.stringify(segments));
                 document.location.href="Save.html"
-            } catch (error) {
-                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
+            } catch(error){
+                console.error(error);
             }
         });
         
         //Auto save segment value
-        document.getElementById("intensity1").addEventListener('blur', async() => {
+        intensity1.addEventListener('blur', async() => {
             try{
                 if (intensity1 < 0 || intensity1 > 255) {
-                    document.getElementById('alertstring').textContent += 'Invalid intensity for pump 1. Must be between 0 and 255.\n';
+                    alertstring.textContent += 'Invalid intensity for pump 1. Must be between 0 and 255.\n';
                     return;
                 }
-                segments[document.getElementById('segmentnumber').selectedIndex].intensity1 = document.getElementById("intensity1").value;
-            }catch (error){
-                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
+                segments[segmentoption.selectedIndex].intensity1 = intensity1.value;
+            }catch(error){
+                console.error(error);
             }
         });
 
-        document.getElementById("intensity2").addEventListener('blur', async() => {
+        intensity2.addEventListener('blur', async() => {
             try{
                 if (intensity2 < 0 || intensity2 > 255) {
-                    document.getElementById('alertstring').textContent += 'Invalid intensity for pump 2. Must be between 0 and 255.\n';
+                    alertstring.textContent += 'Invalid intensity for pump 2. Must be between 0 and 255.\n';
                     return;
                 }
-                segments[document.getElementById('segmentnumber').selectedIndex].intensity2 = document.getElementById("intensity2").value;
-            }catch (error){
-                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
+                segments[segmentoption.selectedIndex].intensity2 = intensity2.value;
+            }catch(error){
+                console.error(error);
             }
         });
 
-        document.getElementById("intensity3").addEventListener('blur', async() => {
+        intensity3.addEventListener('blur', async() => {
             try{
                 if (intensity3 < 0 || intensity3 > 255) {
-                    document.getElementById('alertstring').textContent += 'Invalid intensity for pump 3. Must be between 0 and 255.\n';
+                    alertstring.textContent += 'Invalid intensity for pump 3. Must be between 0 and 255.\n';
                     return;
                 }
-                segments[document.getElementById('segmentnumber').selectedIndex].intensity3 = document.getElementById("intensity3").value;
-            }catch (error){
-                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
+                segments[segmentoption.selectedIndex].intensity3 = intensity3.value;
+            }catch(error){
+                console.error(error);
             }
         });
 
-        document.getElementById("intensity4").addEventListener('blur', async() => {
+        intensity4.addEventListener('blur', async() => {
             try{
                 if (intensity4 < 0 || intensity4 > 255) {
-                    document.getElementById('alertstring').textContent += 'Invalid intensity for pump 4. Must be between 0 and 255.\n';
+                    alertstring.textContent += 'Invalid intensity for pump 4. Must be between 0 and 255.\n';
                     return;
                 }
-                segments[document.getElementById('segmentnumber').selectedIndex].intensity4 = document.getElementById("intensity4").value;
-            }catch (error){
-                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
+                segments[segmentoption.selectedIndex].intensity4 = intensity4.value;
+            }catch(error){
+                console.error(error);
             }
         });
 
-        document.getElementById("intensity5").addEventListener('blur', async() => {
+        intensity5.addEventListener('blur', async() => {
             try{
                 if (intensity5 < 0 || intensity5 > 255) {
-                    document.getElementById('alertstring').textContent += 'Invalid intensity for pump 5. Must be between 0 and 255.\n';
+                    alertstring.textContent += 'Invalid intensity for pump 5. Must be between 0 and 255.\n';
                     return;
                 }
-                segments[document.getElementById('segmentnumber').selectedIndex].intensity5 = document.getElementById("intensity5").value;
-            }catch (error){
-                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
+                segments[segmentoption.selectedIndex].intensity5 = intensity5.value;
+            }catch(error){
+                console.error(error);
             }
         });
 
-        document.getElementById("intensity6").addEventListener('blur', async() => {
+        intensity6.addEventListener('blur', async() => {
             try{
                 if (intensity6 < 0 || intensity6 > 255) {
-                    document.getElementById('alertstring').textContent += 'Invalid intensity for pump 6. Must be between 0 and 255.\n';
+                    alertstring.textContent += 'Invalid intensity for pump 6. Must be between 0 and 255.\n';
                     return;
                 }
-                segments[document.getElementById('segmentnumber').selectedIndex].intensity6 = document.getElementById("intensity6").value;
-            }catch (error){
-                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
+                segments[segmentoption.selectedIndex].intensity6 = intensity6.value;
+            }catch(error){
+                console.error(error);
             }
         });
 
-        document.getElementById("executionTime").addEventListener('blur', async() => {
+        executionTime.addEventListener('blur', async() => {
             try{
-            segments[document.getElementById('segmentnumber').selectedIndex].executionTime = document.getElementById("executionTime").value;
-            }catch (error){
-                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
+            segments[segmentoption.selectedIndex].executionTime = executionTime.value;
+            }catch(error){
+                console.error(error);
             }
         });
-        document.getElementById("startDelay").addEventListener('blur', async() => {
+        startDelay.addEventListener('blur', async() => {
             try{
-            segments[document.getElementById('segmentnumber').selectedIndex].startDelay = document.getElementById("startDelay").value;
-            }catch (error){
-                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
+            segments[segmentoption.selectedIndex].startDelay = startDelay.value;
+            }catch(error){
+                console.error(error);
             }
         });
-        document.getElementById("executionValueType").addEventListener('change', async() => {
+        executionTime.addEventListener('change', async() => {
             try{
-            segments[document.getElementById('segmentnumber').selectedIndex].executionValueType = document.getElementById("executionValueType").selectedIndex;
-            }catch (error){
-                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
+            segments[segmentoption.selectedIndex].executionValueType = executionTime.selectedIndex;
+            }catch(error){
+                console.error(error);
             }
         });
-        document.getElementById("startValueType").addEventListener('change', async() => {
+        executionValueType.addEventListener('change', async() => {
             try{
-            segments[document.getElementById('segmentnumber').selectedIndex].startValueType = document.getElementById("startValueType").selectedIndex;
-            }catch (error){
-                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
+            segments[segmentoption.selectedIndex].startValueType = executionValueType.selectedIndex;
+            }catch(error){
+                console.error(error);
             }
         });
 
         document.getElementById("DeleteSegment").addEventListener('click', ()=>{
             try {
+
+                for (i=segmentoption.selectedIndex;i<segmentcount;i++){
+                    segmentoption.options[i].text = ("Segment "+i);
+                }
                 segmentcount -= 1;
-                segments.splice(document.getElementById("segmentnumber").selectedIndex,1);
-                document.getElementById('segmentnumber').remove(document.getElementById("segmentnumber").selectedIndex)
+                segments.splice(segmentoption.selectedIndex,1);
+                segmentoption.remove(segmentoption.selectedIndex)
                 if (segmentcount==0){
                     AddSegment();
                     return;
                 }
-                document.getElementById('intensity1').value=segments[0].intensity1;
-                document.getElementById('intensity2').value=segments[0].intensity2;
-                document.getElementById('intensity3').value=segments[0].intensity3;
-                document.getElementById('intensity4').value=segments[0].intensity4;
-                document.getElementById('intensity5').value=segments[0].intensity5;
-                document.getElementById('intensity6').value=segments[0].intensity6;
-                document.getElementById('startDelay').value=segments[0].startDelay;
-                document.getElementById('startValueType').selectedIndex=segments[0].startValueType;
-                document.getElementById('executionTime').value=segments[0].executionTime;
-                document.getElementById('executionValueType').selectedIndex=segments[0].executionValueType;
-            } catch (error) {
-                document.getElementById('alertstring').textContent += `Error: ${error}\n`;
+                intensity1.value=segments[0].intensity1;
+                intensity2.value=segments[0].intensity2;
+                intensity3.value=segments[0].intensity3;
+                intensity4.value=segments[0].intensity4;
+                intensity5.value=segments[0].intensity5;
+                intensity6.value=segments[0].intensity6;
+                startDelay.value=segments[0].startDelay;
+                startValueType.selectedIndex=segments[0].startValueType;
+                executionTime.value=segments[0].executionTime;
+                executionValueType.selectedIndex=segments[0].executionValueType;
+                alertstring.textContent="Segment Deleted"
+            } catch(error){
+                console.error(error);
             }
         })
 
@@ -435,14 +447,13 @@
                 segmentcount += 1;
                 var newsegment = document.createElement("option");
                 newsegment.text = "+"
-                var segmentoption = document.getElementById("segmentnumber");
                 segmentoption.options[segmentcount-1].text=("Segment "+segmentcount);
                 segmentoption.add(newsegment);
                 segmentoption.selectedIndex=segmentcount-1;
                 ChangeSegment(segmentcount-1)
-                document.getElementById('alertstring').textContent = `Segment ${segmentcount} created`;
+                alertstring.textContent = `Segment ${segmentcount} created`;
             } catch(error){
-                document.getElementById('alertstring').textContent = `Error: ${error}\n`;
+                console.error(error);
             }
         };
 
@@ -451,16 +462,16 @@
         })
 
         function ChangeSegment(segmentindex){
-            document.getElementById('intensity1').value=segments[segmentindex].intensity1;
-            document.getElementById('intensity2').value=segments[segmentindex].intensity2;
-            document.getElementById('intensity3').value=segments[segmentindex].intensity3;
-            document.getElementById('intensity4').value=segments[segmentindex].intensity4;
-            document.getElementById('intensity5').value=segments[segmentindex].intensity5;
-            document.getElementById('intensity6').value=segments[segmentindex].intensity6;
-            document.getElementById('startDelay').value=segments[segmentindex].startDelay;
-            document.getElementById('startValueType').selectedIndex=segments[segmentindex].startValueType;
-            document.getElementById('executionTime').value=segments[segmentindex].executionTime;
-            document.getElementById('executionValueType').selectedIndex=segments[segmentindex].executionValueType;
+            intensity1.value=segments[segmentindex].intensity1;
+            intensity2.value=segments[segmentindex].intensity2;
+            intensity3.value=segments[segmentindex].intensity3;
+            intensity4.value=segments[segmentindex].intensity4;
+            intensity5.value=segments[segmentindex].intensity5;
+            intensity6.value=segments[segmentindex].intensity6;
+            startDelay.value=segments[segmentindex].startDelay;
+            startValueType.selectedIndex=segments[segmentindex].startValueType;
+            executionTime.value=segments[segmentindex].executionTime;
+            executionValueType.selectedIndex=segments[segmentindex].executionValueType;
         }
 
     </script>

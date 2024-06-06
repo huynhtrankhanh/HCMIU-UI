@@ -193,7 +193,7 @@
                 sessionStorage.setItem('session',JSON.stringify(SaveList[selectsave].Savefile));
                 location.href='pump2.html';
             } catch (error) {
-                document.getElementById('alertstring').textContent = `Error: ${error}\n`;   
+                console.error(error);
             }
         })
 
@@ -207,7 +207,7 @@
                 localStorage.setItem("SaveList",JSON.stringify(SaveList));
                 location.reload();
             } catch (error) {
-                document.getElementById('alertstring').textContent = `Error: ${error}\n`;   
+                console.error(error);
             }
         })
 

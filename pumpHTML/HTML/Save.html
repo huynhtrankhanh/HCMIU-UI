@@ -236,7 +236,7 @@
                 selectsave="NewSave";
                 document.getElementById("NewSave").style.outlineStyle="solid";
             } catch (error) {
-                document.getElementById('alertstring').textContent = `Error: ${error}\n`;
+                console.error(error);
             }
         });
 
@@ -265,7 +265,7 @@
                     alert("Override ") 
                 }*/
             } catch (error) {
-                document.getElementById('alertstring').textContent = `Error: ${error}\n`;   
+                console.error(error);   
             }
         });
 
@@ -291,7 +291,7 @@
                 localStorage.setItem("SaveList", JSON.stringify(SaveList)); // Store SaveList in localStorage
                 location.reload();
             } catch (error) {
-                document.getElementById('alertstring').textContent = `Error: ${error}\n`;   
+                console.error(error);   
             }
         });
 
