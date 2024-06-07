@@ -4,8 +4,11 @@ type CrusgkeoProps = {
   twoPumpController: PumpController;
   fourPumpController: PumpController;
 };
+let initialized = false;
 export const Crusgkeo: React.FC<CrusgkeoProps> = ({ twoPumpController, fourPumpController }) => {
   useEffect(() => {
+    if (initialized) return;
+    initialized = true;
     document.write(`<!DOCTYPE html>
 <html>
   <head>
