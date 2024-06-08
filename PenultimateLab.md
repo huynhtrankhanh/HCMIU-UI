@@ -20,7 +20,7 @@ You are being asked to participate in a usability test for a high-fidelity proto
     - At the end of the game, a combination of bitter and sweet tastes will be pumped.
 
 ## Risks
-The risks associated with this study are minimal and similar to those encountered in daily life. Tastes used are common and FDA approved.
+The risks associated with this study are minimal and similar to those encountered in daily life. Tastes used are common and safe for human consumption.
 
 ## Confidentiality
 Your data will be kept confidential and anonymous. The results will be used for educational purposes only.
