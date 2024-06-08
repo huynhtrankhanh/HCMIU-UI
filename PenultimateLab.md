@@ -2,47 +2,99 @@ Below are the documents written in Markdown for the consent form, questionnaire,
 
 ### Consent Form
 
-```markdown
-# Informed Consent Form
+# Research Consent Form
 
-## Purpose of the Study
-You are being asked to participate in a usability test for a high-fidelity prototype that involves interacting with a machine that pumps custom tastes into the mouth. This study has two parts: customizing taste intensity and playing a taste-integrated game similar to Candy Crush.
+### **Vietnamese (Tiếng Việt)**
 
-## What You Will Do in the Study
-1. **Experience 1: Customize Taste**
-    - You will type the intensity of six basic tastes (sweet, sour, bitter, umami, salty, water) into a user interface.
-    - Hit the "START" button to begin taste delivery and "STOP" to stop it.
+### THÔNG TIN VÀ LỜI ĐỒNG Ý
 
-2. **Experience 2: Playing Crusgkeo, a Candy Crush Clone**
-    - The game lasts 30 seconds.
-    - Initially, a combination of sour and sweet tastes will be pumped.
-    - A wrong swap will pump a bitter taste, and a right swap will pump a sweet taste.
-    - At the end of the game, a combination of bitter and sweet tastes will be pumped.
+**Tên dự án:** Nghiên cứu Giao diện Người - Máy
 
-## Risks
-The risks associated with this study are minimal and similar to those encountered in daily life. Tastes used are common and safe for human consumption.
+**Cơ sở nghiên cứu:** Khoa Công nghệ Thông tin, Trường Đại học Quốc tế HCMIU
 
-## Confidentiality
-Your data will be kept confidential and anonymous. The results will be used for educational purposes only.
+**Người liên hệ:**  
+Nhóm nghiên cứu HCI  
+Email: hci_research_group@hcmut.edu.vn  
+Điện thoại: +84 28 3724 4270
 
-## Voluntary Participation
-Your participation in this study is entirely voluntary. You are free to withdraw at any time without penalty.
+**Tiêu đề:** Đơn Đồng Ý Tham Gia Nghiên Cứu
 
-### Consent
-I have read and understood the information provided above. I voluntarily agree to participate in this study.
+Bạn đã được mời tham gia vào một nghiên cứu khoa học nhằm hiểu rõ hơn cách người dùng tương tác với giao diện máy tính của hệ thống bơm nước đa vị. Xin vui lòng đọc kỹ các thông tin sau trước khi quyết định tham gia.
 
-**Participant's Name:** [Your Name]
+**Mục đích của nghiên cứu:**  
+Nhóm nghiên cứu muốn đánh giá mức độ hài lòng và hiệu quả khi người dùng trải nghiệm hai mô hình giao diện của hệ thống bơm nước đa vị.
 
-**Signature:** ____________________________
+**Quy trình tham gia:**  
+- Bạn sẽ tham gia vào hai trải nghiệm: Tùy chỉnh vị và Chơi trò chơi Crusgkeo.
+- Mỗi trải nghiệm sẽ kéo dài khoảng 5 phút.
+- Nhóm nghiên cứu đảm bảo rằng toàn bộ quá trình sẽ an toàn và không gây hại về sức khỏe.
 
-**Date:** ____________________________
+**Bảo mật thông tin:**  
+Mọi thông tin liên quan đến bạn sẽ được bảo mật và không tiết lộ ra bên ngoài mà không có sự đồng ý của bạn.
 
-**Investigator's Name:** [Investigator's Name]
+**Quyền lợi khi tham gia:**  
+Bạn có quyền rút lui khỏi nghiên cứu bất kỳ lúc nào mà không cần lý do.
 
-**Signature:** ____________________________
+**Cam kết của nhóm nghiên cứu:**  
+Nhóm nghiên cứu sẽ thực hiện theo đúng quy trình đạo đức và pháp luật của Việt Nam.
 
-**Date:** ____________________________
-```
+**Đồng ý tham gia:**
+
+- Tôi đã đọc và hiểu rõ thông tin về nghiên cứu này.
+- Tôi đồng ý tham gia và cung cấp thông tin cá nhân cho nhóm nghiên cứu.
+
+**Tên người tham gia:** ________________________
+
+**Chữ ký:** ________________________
+
+**Ngày:** ________________________
+
+---
+
+### **English**
+
+### INFORMATION AND CONSENT
+
+**Project name:** Human-Computer Interaction Study
+
+**Institution:** Department of Information Technology, International University- VNU HCM
+
+**Contact details:**  
+HCI Research Group  
+Email: hci_research_group@hcmut.edu.vn  
+Phone: +84 28 3724 4270
+
+**Title:** Participant Consent Form
+
+You are invited to participate in a scientific study aimed at better understanding user interaction with the computer interface of a multi-flavor water pumping system. Please read the following information carefully before deciding to take part.
+
+**Purpose of the study:**  
+The research team aims to assess user satisfaction and efficiency while experiencing two interface models of the multi-flavor water pumping system.
+
+**Participation procedure:**  
+- You will take part in two experiences: Customize Flavor and Play Crusgkeo.
+- Each experience will last approximately 5 minutes.
+- The research team ensures that the entire process is safe and poses no health risks.
+
+**Confidentiality:**  
+All information related to you will be kept confidential and will not be disclosed without your consent.
+
+**Participant rights:**  
+You have the right to withdraw from the study at any time without any reason.
+
+**Research team commitment:**  
+The research team will adhere to ethical procedures and the laws of Vietnam.
+
+**Consent to participate:**
+
+- I have read and understood the information about this study.
+- I agree to participate and provide personal information to the research team.
+
+**Participant name:** ________________________
+
+**Signature:** ________________________
+
+**Date:** ________________________
 
 ### Questionnaire
 
