@@ -13,8 +13,8 @@ Below are the documents written in Markdown for the consent form, questionnaire,
 **Cơ sở nghiên cứu:** Khoa Công nghệ Thông tin, Trường Đại học Quốc tế HCMIU
 
 **Người liên hệ:**  
-Huỳnh Trần Khanh
-Email: qcdz9r6wpcbh59@gmail.com 
+Huỳnh Trần Khanh  
+Email: qcdz9r6wpcbh59@gmail.com   
 Điện thoại: +84 917 084 047
 
 **Tiêu đề:** Đơn Đồng Ý Tham Gia Nghiên Cứu
@@ -60,8 +60,8 @@ Nhóm nghiên cứu sẽ thực hiện theo đúng quy trình đạo đức và 
 **Institution:** Department of Information Technology, International University - VNU HCM
 
 **Contact details:**  
-Huỳnh Trần Khanh
-Email: qcdz9r6wpcbh59@gmail.com 
+Huỳnh Trần Khanh  
+Email: qcdz9r6wpcbh59@gmail.com   
 Phone: +84 917 084 047
 
 **Title:** Participant Consent Form
