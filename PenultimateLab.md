@@ -13,9 +13,9 @@ Below are the documents written in Markdown for the consent form, questionnaire,
 **Cơ sở nghiên cứu:** Khoa Công nghệ Thông tin, Trường Đại học Quốc tế HCMIU
 
 **Người liên hệ:**  
-Nhóm nghiên cứu HCI  
-Email: hci_research_group@hcmut.edu.vn  
-Điện thoại: +84 28 3724 4270
+Huỳnh Trần Khanh
+Email: qcdz9r6wpcbh59@gmail.com 
+Điện thoại: +84 917 084 047
 
 **Tiêu đề:** Đơn Đồng Ý Tham Gia Nghiên Cứu
 
@@ -57,12 +57,12 @@ Nhóm nghiên cứu sẽ thực hiện theo đúng quy trình đạo đức và 
 
 **Project name:** Human-Computer Interaction Study
 
-**Institution:** Department of Information Technology, International University- VNU HCM
+**Institution:** Department of Information Technology, International University - VNU HCM
 
 **Contact details:**  
-HCI Research Group  
-Email: hci_research_group@hcmut.edu.vn  
-Phone: +84 28 3724 4270
+Huỳnh Trần Khanh
+Email: qcdz9r6wpcbh59@gmail.com 
+Phone: +84 917 084 047
 
 **Title:** Participant Consent Form
 
