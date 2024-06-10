@@ -204,18 +204,15 @@ The research team will adhere to ethical procedures and the laws of Vietnam.
     - Brief each participant about the study.
     - Obtain signed consent forms.
 
-2. **Pre-test Questionnaire:**
-    - Have participants fill out the background information section.
-
-3. **Testing:**
+2. **Testing:**
     - **Experience 1:** Demonstrate and then allow participants to customize taste intensities.
     - **Experience 2:** Allow participants to play the Crusgkeo game.
     - Take notes and photos during the process.
 
-4. **Post-test Questionnaire:**
+3. **Post-test Questionnaire:**
     - Have participants fill out the experience-related questions.
 
-5. **Debriefing:**
+4. **Debriefing:**
     - Ask prepared questions to gather additional feedback:
         - What did you like most about each experience?
         - What did you find challenging or confusing?
