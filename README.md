@@ -8,7 +8,7 @@ https://www.figma.com/file/FjIvEsbxVfqbO1Frsc9PVL/Project-UI-UX?type=design&node
 
 ## Task 2
 - Task: Customize taste intensity and duration.
-- Description: Users should have the ability to adjust both the intensity of the flavor and the duration of taste delivery according to their preferences. This task involves navigating through settings to tailor the taste experience to their liking.
+- Description: Users should have the ability to adjust both the intensity of the flavor and the duration of taste delivery according to their preferences.
 
 ## Task 3
 - Task: Play Crusgkeo
