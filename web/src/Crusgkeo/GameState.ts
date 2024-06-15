@@ -24,7 +24,7 @@ const noPumping = { bitter: 0, water: 0, sweet: 0, salty: 0, umami: 0, sour: 0 }
 const bitter = { ...noPumping, bitter: 255 };
 const sweet = { ...noPumping, sweet: 255 };
 const bittersweet = { ...noPumping, sweet: 255, bitter: 255 };
-const sourSweet = { ...noPumping, sour: 255, sweet: 255 };
+const sourSweet = { ...noPumping, salty: 255, sweet: 255 };
 
 type GameFadeStatus =
   | { type: "no" }
@@ -108,7 +108,7 @@ class GameStateManager {
 
   #startPumping(profile: TasteProfile) {
     clearTimeout(this.#lastTimerId);
-    this.#lastTimerId = setTimeout(() => { this.#stopPumping(); }, 1000);
+    this.#lastTimerId = setTimeout(() => { this.#stopPumping(); }, 5000);
     this.#twoPumpController.pump(1, profile.bitter);
     this.#twoPumpController.pump(2, profile.water);
     this.#fourPumpController.pump(1, profile.sweet);

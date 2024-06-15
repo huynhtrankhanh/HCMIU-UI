@@ -70,12 +70,12 @@ export const TasteProfileScreen: React.FC<TasteProfileScreenProps> = ({ twoPumpC
     return (
         <div className="max-w-lg mx-auto p-8 bg-white shadow-lg rounded-lg space-y-6">
             <h1 className="text-2xl font-bold text-center">Configure Taste Profile</h1>
-            {Object.keys(profile).map(key => (
+            {Object.keys(profile).slice(0, 4).map((key, index) => (
                 <div key={key} className="flex items-center space-x-4">
-                    <label className="w-32 capitalize font-medium">{key} (0–255)</label>
+                    <label className="w-32 capitalize font-medium">Taste {index} (0–255)</label>
                     <input 
                         type="number" 
-                        value={profile[key as keyof TasteProfile]} 
+			defaultValue="0"
                         onChange={e => updateProfile(key as keyof TasteProfile, Number(e.target.value))} 
                         className="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
                         min="0" 

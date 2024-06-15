@@ -232,7 +232,7 @@ export const initialize = async (twoPumpController: PumpController, fourPumpCont
 
       drawBoard.displayScore(state.state.score);
       const timeElapsed = time - state.state.gameStartAt;
-      const timeLimit = 30000;
+      const timeLimit = 60000;
       const displayedTimeLeft = Math.trunc(
         Math.max(timeLimit - timeElapsed, 0) / 1000
       );
