@@ -19,6 +19,7 @@ export const TasteProfileScreen: React.FC<TasteProfileScreenProps> = ({ twoPumpC
     const [profile, setProfile] = useState<TasteProfile>({ bitter: 0, water: 0, sweet: 0, salty: 0, umami: 0, sour: 0 });
 
     const updateProfile = (key: keyof TasteProfile, value: number) => {
+	console.log(twoPumpController)
         setProfile(prevProfile => ({
             ...prevProfile,
             [key]: value,
