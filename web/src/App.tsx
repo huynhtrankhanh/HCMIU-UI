@@ -19,12 +19,12 @@ export default function App() {
     };
 
     return (
-            !twoPumpController || !fourPumpController ? (
+            !fourPumpController ? (
                 <DeviceConnectionScreen onConnect={handleConnect} connectedCount={Number(twoPumpController !== null) + Number(fourPumpController !== null)} />
             ) : (
                 localStorage.experience === "crusgkeo" ? <Crusgkeo twoPumpController={twoPumpController} 
                     fourPumpController={fourPumpController} /> : <TasteProfileScreen 
-                    twoPumpController={twoPumpController} 
+                    twoPumpController={twoPumpController as PumpController} 
                     fourPumpController={fourPumpController} 
                 />
             )
