@@ -21,9 +21,9 @@ type TasteProfile = {
 };
 
 const noPumping = { bitter: 0, water: 0, sweet: 0, salty: 0, umami: 0, sour: 0 };
-const bitter = { ...noPumping, bitter: 255 };
+const bitter = { ...noPumping, umami: 255 };
 const sweet = { ...noPumping, sweet: 255 };
-const bittersweet = { ...noPumping, sweet: 255, bitter: 255 };
+const bittersweet = { ...noPumping, sweet: 255, umami: 255 };
 const sourSweet = { ...noPumping, salty: 255, sweet: 255 };
 
 type GameFadeStatus =
