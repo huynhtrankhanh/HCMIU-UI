@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { PumpController } from './PumpController';
 import { DeviceConnectionScreen } from './DeviceConnectionScreen';
 import { TasteProfileScreen } from './TasteProfileScreen';
