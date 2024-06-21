@@ -26,8 +26,6 @@ export const TasteProfileScreen: React.FC<TasteProfileScreenProps> = ({ twoPumpC
     };
 
     const startPumping = () => {
-        twoPumpController.pump(1, profile.bitter);
-        twoPumpController.pump(2, profile.water);
         fourPumpController.pump(1, profile.sweet);
         fourPumpController.pump(2, profile.salty);
         fourPumpController.pump(3, profile.umami);
@@ -35,8 +33,6 @@ export const TasteProfileScreen: React.FC<TasteProfileScreenProps> = ({ twoPumpC
     };
 
     const stopPumping = () => {
-        twoPumpController.pump(1, 0);
-        twoPumpController.pump(2, 0);
         fourPumpController.pump(1, 0);
         fourPumpController.pump(2, 0);
         fourPumpController.pump(3, 0);
