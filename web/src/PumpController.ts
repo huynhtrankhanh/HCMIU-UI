@@ -18,7 +18,7 @@ const fourPumpConfig: { [key: number]: MotorPins } = {
 
 export class PumpController {
     private motorPins: { [key: number]: MotorPins };
-    private port: SerialPort | null = null;
+    private port: any | null = null;
     private writer: WritableStreamDefaultWriter | null = null;
     private reader: ReadableStreamDefaultReader<Uint8Array> | null = null;
     public type: '2-pump' | '4-pump' | null = null;
@@ -29,7 +29,7 @@ export class PumpController {
 
     async connect(): Promise<void> {
         try {
-            this.port = await navigator.serial.requestPort();
+            this.port = await (navigator as unknown as any).serial.requestPort();
             await this.port.open({ baudRate: 9600 });
 
             this.writer = this.port.writable.getWriter();
