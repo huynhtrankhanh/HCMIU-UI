@@ -109,7 +109,7 @@ class GameStateManager {
 
   #startPumping(profile: TasteProfile) {
     clearTimeout(this.#lastTimerId);
-    this.#lastTimerId = setTimeout(() => { this.#stopPumping(); }, 5000);
+    this.#lastTimerId = setTimeout(() => { this.#stopPumping(); }, 800);
     this.#fourPumpController.pump(1, profile.sweet);
     this.#fourPumpController.pump(2, profile.salty);
     this.#fourPumpController.pump(3, profile.umami);
