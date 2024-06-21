@@ -104,6 +104,7 @@ class GameStateManager {
     this.#columnCount = columnCount;
     this.#twoPumpController = twoPumpController;
     this.#fourPumpController = fourPumpController;
+    console.log(this.#twoPumpController)
   }
 
   #startPumping(profile: TasteProfile) {
