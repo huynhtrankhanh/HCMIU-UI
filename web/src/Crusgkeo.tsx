@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { initialize } from "./Crusgkeo/script";
+import { PumpController } from "./PumpController"
 type CrusgkeoProps = {
   twoPumpController: PumpController;
   fourPumpController: PumpController;
